@@ -1,0 +1,5 @@
+rootProject.name = 'rtkit_golos'
+
+include ':core-golos'
+include ':notifier'
+include ':poll-stat'
