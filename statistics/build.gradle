@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management'
 }
 
-group = 'com.rtkit.golos.core-golos'
+group = 'com.rtkit.golos.core.statistics'
 version = '0.0.1-SNAPSHOT'
 
 java {

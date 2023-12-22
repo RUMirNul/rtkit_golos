@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management'
 }
 
-group = 'com.rtkit.golos.core.poll-stat'
+group = 'com.rtkit.golos.golos'
 version = '0.0.1-SNAPSHOT'
 
 java {

@@ -1,5 +1,5 @@
 rootProject.name = 'rtkit_golos'
 
-include ':core-golos'
+include ':golos'
 include ':notifier'
-include ':poll-stat'
+include ':statistics'
