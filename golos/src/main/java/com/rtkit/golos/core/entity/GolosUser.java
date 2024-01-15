@@ -26,4 +26,7 @@ public class GolosUser {
     @Column(name = "passhash", nullable = false, length = 320)
     private String passHash;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private UserRole role;
 }
