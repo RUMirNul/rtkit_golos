@@ -31,4 +31,8 @@ public class Poll {
 
     @Column(name = "createddt", nullable = false)
     private Instant createdDt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pollstatus")
+    private PollStatus status;
 }

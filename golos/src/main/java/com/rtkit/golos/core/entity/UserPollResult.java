@@ -33,4 +33,8 @@ public class UserPollResult {
 
     @Column(name = "endeddt")
     private Instant endedDt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private UserPollStatus status;
 }

@@ -20,4 +20,7 @@ public class Question {
     @Column(name = "isanswerrequired", nullable = false)
     private Boolean isAnswerRequired = false;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private QuestionType type;
 }
