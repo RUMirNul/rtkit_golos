@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  liquibase:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtkit_golos
+    username: postgres
+    password: padmin

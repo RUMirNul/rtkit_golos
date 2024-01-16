@@ -12,16 +12,6 @@ public class UserAnswer {
     @EmbeddedId
     private UserAnswerId id;
 
-    @MapsId("pollquestionid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pollquestionid", nullable = false)
-    private PollQuestion pollQuestionId;
-
-    @MapsId("answerid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "answerid", nullable = false)
-    private Answer answerId;
-
     @Column(name = "useranswer", length = 320)
     private String userAnswer;
 }
