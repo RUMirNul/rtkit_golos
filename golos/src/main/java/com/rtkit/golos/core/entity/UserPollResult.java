@@ -3,6 +3,7 @@ package com.rtkit.golos.core.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -28,6 +29,7 @@ public class UserPollResult {
     @JoinColumn(name = "pollid", nullable = false)
     private Poll pollId;
 
+    @CreationTimestamp
     @Column(name = "starteddt", nullable = false)
     private Instant startedDt;
 
