@@ -20,6 +20,7 @@ public interface PollMapper {
     @Mapping(target = "createdDt", ignore = true)
     PollDto toDto(PollCreateDto dto);
 
+    @Mapping(target = "authorId", ignore = true)
     @Mapping(target = "createdDt", ignore = true)
     PollDto toDto(PollUpdateDto dto);
 

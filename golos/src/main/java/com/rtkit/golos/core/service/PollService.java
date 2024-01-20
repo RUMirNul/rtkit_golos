@@ -46,7 +46,6 @@ public class PollService {
     public PollDto addPoll(PollCreateDto createPollDto) {
         PollDto requestDto = pollMapper.toDto(createPollDto);
         Poll newPoll = pollMapper.toModel(requestDto);
-        System.out.println(newPoll.toString());
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);
         return pollMapper.toDto(createdPoll);
     }

@@ -33,9 +33,8 @@ public class UserService {
     }
 
     public UserDto addUser(UserCreateDto newUser) {
-        GolosUser newPoll = userMapper.toModel(newUser);
-        System.out.println(newPoll.toString());
-        GolosUser createdPoll = userRepo.saveAndFlush(newPoll);
+        GolosUser createdUser = userMapper.toModel(newUser);
+        GolosUser createdPoll = userRepo.saveAndFlush(createdUser);
         return userMapper.toDto(createdPoll);
     }
 
