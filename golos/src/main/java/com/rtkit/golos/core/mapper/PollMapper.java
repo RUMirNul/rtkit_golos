@@ -7,7 +7,7 @@ import com.rtkit.golos.core.entity.Poll;
 import com.rtkit.golos.core.entity.PollStatus;
 import org.mapstruct.*;
 
-@Mapper(componentModel="spring", uses = {UserMapper.class})
+@Mapper(componentModel="spring", uses = {UserMapperUtil.class})
 public interface PollMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "authorId", source = "authorId")
@@ -21,7 +21,6 @@ public interface PollMapper {
     PollDto toDto(PollCreateDto dto);
 
     @Mapping(target = "createdDt", ignore = true)
-    @Mapping(target = "authorId", ignore = true)
     PollDto toDto(PollUpdateDto dto);
 
     @ValueMappings({

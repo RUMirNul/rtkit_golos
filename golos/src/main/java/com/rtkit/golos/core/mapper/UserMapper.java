@@ -1,20 +1,23 @@
 package com.rtkit.golos.core.mapper;
 
-import com.rtkit.golos.core.access.UserRepo;
+import com.rtkit.golos.core.dto.UserCreateDto;
+import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.entity.GolosUser;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import com.rtkit.golos.core.entity.UserRole;
+import org.mapstruct.*;
 
-@AllArgsConstructor
-@Component
-public class UserMapper {
-    private final UserRepo userRepo;
+@Mapper(componentModel="spring", uses = {UserMapperUtil.class})
+public interface UserMapper {
+    @Mapping(target = "id", ignore = true)
+    UserDto toDto(GolosUser dto);
 
-    public GolosUser fromId(Integer id) {
-        return userRepo.getReferenceById(id);
-    }
+    @ValueMappings({
+            @ValueMapping(source="ADMIN", target="ADMIN"),
+            @ValueMapping(source="MODERATOR", target="MODERATOR"),
+            @ValueMapping(source="USER", target="USER")
+    })
+    UserRole toUserRole(String roleType);
 
-    public Integer fromId(GolosUser authorId) {
-        return authorId.getId();
-    }
+    @Mapping(target = "id", ignore = true)
+    GolosUser toModel(UserCreateDto newUser);
 }

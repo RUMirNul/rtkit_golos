@@ -1,8 +1,10 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.access.PollRepo;
+import com.rtkit.golos.core.dto.PollCreateDto;
 import com.rtkit.golos.core.dto.PollDto;
 import com.rtkit.golos.core.dto.PollStatusDto;
+import com.rtkit.golos.core.dto.PollUpdateDto;
 import com.rtkit.golos.core.entity.Poll;
 import com.rtkit.golos.core.entity.PollStatus;
 import com.rtkit.golos.core.exception.NotFoundException;
@@ -23,6 +25,10 @@ public class PollService {
     private final PollRepo pollRepo;
     private final PollMapper pollMapper;
 
+    public PollDto getPollById(Integer pollId) {
+        return pollMapper.toDto(pollRepo.getReferenceById(pollId));
+    }
+
     public List<PollDto> getAllPolls() {
         List<PollDto> pollList = new ArrayList<>();
         for (Poll poll : pollRepo.findAll())
@@ -37,20 +43,26 @@ public class PollService {
         return new PollStatusDto(statusDto, statusDto.size());
     }
 
-    public PollDto addPoll(PollDto newStudent) {
-        Poll newPoll = pollMapper.toModel(newStudent);
+    public PollDto addPoll(PollCreateDto createPollDto) {
+        PollDto requestDto = pollMapper.toDto(createPollDto);
+        Poll newPoll = pollMapper.toModel(requestDto);
         System.out.println(newPoll.toString());
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);
         return pollMapper.toDto(createdPoll);
     }
 
-    public PollDto updatePollDto(PollDto newStudent) {
-        Poll newPoll = pollMapper.toModel(newStudent);
+    public PollDto updatePollDto(PollUpdateDto pollUpdateDto) {
+        PollDto requestDto = pollMapper.toDto(pollUpdateDto);
+        Poll newPoll = pollMapper.toModel(requestDto);
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);
         return pollMapper.toDto(createdPoll);
     }
 
-    public PollDto updatePollStatus(Integer pollId, PollStatus status) {
+    public PollDto updatePollStatus(Integer pollId, String pollStatus) {
+        return updatePollStatus(pollId, pollMapper.toPollStatus(pollStatus));
+    }
+
+    private PollDto updatePollStatus(Integer pollId, PollStatus status) {
         Poll foundPoll = pollRepo.findById(pollId)
                 .orElseThrow(() -> new NotFoundException("Опрос с id:%d не найден".formatted(pollId)));
 
