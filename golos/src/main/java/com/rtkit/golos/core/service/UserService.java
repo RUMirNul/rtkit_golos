@@ -41,7 +41,7 @@ public class UserService {
     public UserDto updateUserRole(Integer userId, String role) {
         UserRole userRole = userMapper.toUserRole(role);
         GolosUser foundUser = userRepo.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Опрос с id:%d не найден".formatted(userId)));
+                .orElseThrow(() -> new NotFoundException("Пользователь с id:%d не найден".formatted(userId)));
         foundUser.setRole(userRole);
         GolosUser updatedUser = userRepo.save(foundUser);
         return userMapper.toDto(updatedUser);
