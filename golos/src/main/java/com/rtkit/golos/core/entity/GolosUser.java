@@ -29,4 +29,16 @@ public class GolosUser {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role;
+
+    @Override
+    public String toString() {
+        return "GolosUser{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", passHash='" + passHash + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }
