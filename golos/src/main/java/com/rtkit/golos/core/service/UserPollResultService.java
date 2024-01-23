@@ -1,0 +1,50 @@
+package com.rtkit.golos.core.service;
+
+import com.rtkit.golos.core.access.UserPollResultRepo;
+import com.rtkit.golos.core.dto.UserPollResultCreateDto;
+import com.rtkit.golos.core.dto.UserPollResultDto;
+import com.rtkit.golos.core.entity.UserPollResult;
+import com.rtkit.golos.core.entity.UserPollStatus;
+import com.rtkit.golos.core.exception.NotFoundException;
+import com.rtkit.golos.core.mapper.UserPollResultMapper;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+@Transactional
+public class UserPollResultService {
+    private final UserPollResultRepo userPollResultRepo;
+    private final UserPollResultMapper userMapper;
+
+    public UserPollResultDto getResultById(Integer userId) {
+        return userMapper.toDto(userPollResultRepo.getReferenceById(userId));
+    }
+
+    public List<UserPollResultDto> getAllUserResults() {
+        List<UserPollResultDto> userList = new ArrayList<>();
+        for (UserPollResult result : userPollResultRepo.findAll())
+            userList.add(new UserPollResultDto(result));
+        return userList;
+    }
+
+    public UserPollResultDto addResult(UserPollResultCreateDto newResult) {
+        UserPollResult createdUser = userMapper.toModel(newResult);
+        createdUser.setStatus(UserPollStatus.ONGOING);
+        UserPollResult createdPoll = userPollResultRepo.saveAndFlush(createdUser);
+        return userMapper.toDto(createdPoll);
+    }
+
+    public UserPollResultDto updateResultPollStatus(Integer pollId, String statusName) {
+        UserPollStatus resultStatus = userMapper.toUserPollResult(statusName);
+        UserPollResult foundResult = userPollResultRepo.findById(pollId)
+                .orElseThrow(() -> new NotFoundException("Опрос с id:%d не найден".formatted(pollId)));
+        foundResult.setStatus(resultStatus);
+        UserPollResult updatedResult = userPollResultRepo.save(foundResult);
+        return userMapper.toDto(updatedResult);
+    }
+}

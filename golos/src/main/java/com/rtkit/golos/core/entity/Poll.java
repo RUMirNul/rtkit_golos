@@ -3,6 +3,7 @@ package com.rtkit.golos.core.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -29,10 +30,23 @@ public class Poll {
     @Column(name = "description", nullable = false, length = 300)
     private String description;
 
+    @CreationTimestamp
     @Column(name = "createddt", nullable = false)
     private Instant createdDt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "pollstatus")
     private PollStatus status;
+
+    @Override
+    public String toString() {
+        return "Poll{" +
+                "id=" + id +
+                ", authorId=" + authorId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createdDt=" + createdDt +
+                ", status=" + status +
+                '}';
+    }
 }

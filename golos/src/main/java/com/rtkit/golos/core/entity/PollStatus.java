@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum PollStatus {
-    PUBLIC, PRIVATE, HIDDEN, CLOSED
+    PUBLIC, PRIVATE, HIDDEN, CLOSED, DRAFT
 }
