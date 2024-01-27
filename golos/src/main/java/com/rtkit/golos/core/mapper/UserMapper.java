@@ -8,7 +8,6 @@ import org.mapstruct.*;
 
 @Mapper(componentModel="spring", uses = {UserMapperUtil.class})
 public interface UserMapper {
-    @Mapping(target = "id", ignore = true)
     UserDto toDto(GolosUser dto);
 
     @ValueMappings({

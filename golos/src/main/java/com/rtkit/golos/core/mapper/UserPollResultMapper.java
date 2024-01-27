@@ -9,7 +9,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ValueMapping;
 import org.mapstruct.ValueMappings;
 
-@Mapper(componentModel="spring", uses = {UserMapperUtil.class})
+import java.util.List;
+
+@Mapper(componentModel="spring", uses = {UserMapperUtil.class, PollMapperUtil.class})
 public interface UserPollResultMapper {
     @Mapping(target = "startDt", ignore = true)
     UserPollResultDto toDto(UserPollResult userPollResultEntity);
@@ -26,4 +28,6 @@ public interface UserPollResultMapper {
             @ValueMapping(source="COMPLETED", target="COMPLETED")
     })
     UserPollStatus toUserPollResult(String statusName);
+
+    List<UserPollResultDto> toDto(List<UserPollResult> byUserId);
 }

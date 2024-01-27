@@ -25,6 +25,10 @@ public class UserPollResultService {
         return userMapper.toDto(userPollResultRepo.getReferenceById(userId));
     }
 
+    public List<UserPollResultDto> getParticipationByUserId(Integer userId) {
+        return userMapper.toDto(userPollResultRepo.findByUserId(userId));
+    }
+
     public List<UserPollResultDto> getAllUserResults() {
         List<UserPollResultDto> userList = new ArrayList<>();
         for (UserPollResult result : userPollResultRepo.findAll())

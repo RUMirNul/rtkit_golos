@@ -31,13 +31,23 @@ public class MessagingConfig {
     }
 
     @Bean
-    public Queue promotionMessageQueue() {
-        return new Queue("promotion", false);
+    public Queue activationMessageQueue() {
+        return new Queue("activation", false);
     }
 
     @Bean
-    public Binding bindingPromotionQueue(@Qualifier("promotionMessageQueue") Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("promotion");
+    public Binding bindingActivationQueue(@Qualifier("activationMessageQueue") Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("activation");
+    }
+
+    @Bean
+    public Queue inviteMessageQueue() {
+        return new Queue("invite", false);
+    }
+
+    @Bean
+    public Binding bindingInviteQueue(@Qualifier("inviteMessageQueue") Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("invite");
     }
 
     @Bean

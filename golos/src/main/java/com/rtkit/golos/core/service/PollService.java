@@ -29,6 +29,10 @@ public class PollService {
         return pollMapper.toDto(pollRepo.getReferenceById(pollId));
     }
 
+    public List<PollDto> getPollByUserId(Integer userId) {
+        return pollMapper.toDto(pollRepo.findByUserId(userId));
+    }
+
     public List<PollDto> getAllPolls() {
         List<PollDto> pollList = new ArrayList<>();
         for (Poll poll : pollRepo.findAll())
