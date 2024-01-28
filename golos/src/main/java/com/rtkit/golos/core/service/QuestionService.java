@@ -8,6 +8,7 @@ import com.rtkit.golos.core.dto.QuestionDto;
 import com.rtkit.golos.core.entity.PollQuestion;
 import com.rtkit.golos.core.entity.Question;
 import com.rtkit.golos.core.exception.NotFoundException;
+import com.rtkit.golos.core.mapper.PollMapper;
 import com.rtkit.golos.core.mapper.QuestionMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,8 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final PollQuestionRepository pollQuestionRepository;
     private final QuestionMapper questionMapper;
+    private final PollService pollService;
+    private final PollMapper pollMapper;
 
     public List<PollQuestionDto> getAllQuestionsByPollId(int pollId) {
         log.info("Запрос получения вопросов по id опроса: {}", pollId);
@@ -41,12 +44,22 @@ public class QuestionService {
     }
 
 
-    public QuestionDto addQuestion(QuestionDto questionDto) {
-        log.info("Запрос сохранения нового вопроса: {}", questionDto);
+    public PollQuestionDto addQuestion(PollQuestionDto pollQuestionDto) {
+        log.info("Запрос сохранения нового вопроса: {}", pollQuestionDto);
 
-        Question question = questionMapper.toQuestion(questionDto);
+        Question question = questionMapper.toQuestion(pollQuestionDto.getQuestion());
         Question savedQuestion = questionRepository.save(question);
-        return questionMapper.toQuestionDto(savedQuestion);
+
+        PollQuestion pollQuestion = new PollQuestion();
+        pollQuestion.setPollId(pollMapper.toModel(pollService.getPollById(pollQuestionDto.getPollId())));
+        pollQuestion.setQuestionId(savedQuestion);
+        PollQuestion savedPollQuestion = pollQuestionRepository.save(pollQuestion);
+
+        PollQuestionDto savedPollQuestionDto = new PollQuestionDto();
+        savedPollQuestionDto.setQuestion(questionMapper.toQuestionDto(savedQuestion));
+        savedPollQuestionDto.setPollId(pollQuestionDto.getPollId());
+        savedPollQuestionDto.setId(savedPollQuestion.getId());
+        return savedPollQuestionDto;
     }
 
     public void deleteQuestion(Integer id) {
