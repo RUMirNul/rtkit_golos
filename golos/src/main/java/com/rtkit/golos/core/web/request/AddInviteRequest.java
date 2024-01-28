@@ -1,4 +1,4 @@
-package com.rtkit.golos.core.dto;
+package com.rtkit.golos.core.web.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InviteCreateDto {
+public class AddInviteRequest {
     private Integer pollId;
     private Integer maxUses;
 }

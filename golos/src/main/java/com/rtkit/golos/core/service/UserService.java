@@ -1,7 +1,7 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.access.UserRepo;
-import com.rtkit.golos.core.dto.UserCreateDto;
+import com.rtkit.golos.core.web.request.AddUserRequest;
 import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.entity.GolosUser;
 import com.rtkit.golos.core.entity.UserRole;
@@ -32,7 +32,7 @@ public class UserService {
         return userList;
     }
 
-    public UserDto addUser(UserCreateDto newUser) {
+    public UserDto addUser(AddUserRequest newUser) {
         GolosUser createdUser = userMapper.toModel(newUser);
         GolosUser createdPoll = userRepo.saveAndFlush(createdUser);
         return userMapper.toDto(createdPoll);

@@ -1,9 +1,9 @@
 package com.rtkit.golos.core.controller;
 
-import com.rtkit.golos.core.dto.InviteCreateDto;
+import com.rtkit.golos.core.web.request.AddInviteRequest;
 import com.rtkit.golos.core.dto.InviteQueueDto;
-import com.rtkit.golos.core.dto.PollCreateDto;
-import com.rtkit.golos.core.dto.PollUpdateDto;
+import com.rtkit.golos.core.web.request.AddPollRequest;
+import com.rtkit.golos.core.web.request.UpdatePollRequest;
 import com.rtkit.golos.core.service.InviteService;
 import com.rtkit.golos.core.service.PollService;
 import com.rtkit.golos.core.service.PublishService;
@@ -35,12 +35,12 @@ public class PollController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addPoll(@RequestBody PollCreateDto request) {
+    public ResponseEntity<?> addPoll(@RequestBody AddPollRequest request) {
         return ResponseEntity.ok(pollService.addPoll(request));
     }
 
     @PutMapping
-    public ResponseEntity<?> updatePoll(@RequestBody PollUpdateDto request) {
+    public ResponseEntity<?> updatePoll(@RequestBody UpdatePollRequest request) {
         return ResponseEntity.ok(pollService.updatePollDto(request));
     }
 
@@ -61,7 +61,7 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/invite")
-    public ResponseEntity<?> createInvite(@RequestBody InviteCreateDto request) {
+    public ResponseEntity<?> createInvite(@RequestBody AddInviteRequest request) {
         return ResponseEntity.ok(inviteService.addInvite(request));
     }
 

@@ -1,6 +1,6 @@
 package com.rtkit.golos.core.controller;
 
-import com.rtkit.golos.core.dto.UserPollResultCreateDto;
+import com.rtkit.golos.core.web.request.AddUserPollResultRequest;
 import com.rtkit.golos.core.service.UserPollResultService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class UserPollResultController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addPoll(@RequestBody UserPollResultCreateDto request) {
+    public ResponseEntity<?> addPoll(@RequestBody AddUserPollResultRequest request) {
         return ResponseEntity.ok(userPollResultService.addResult(request));
     }
 

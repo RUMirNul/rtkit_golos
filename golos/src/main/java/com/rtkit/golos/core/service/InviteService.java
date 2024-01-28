@@ -1,7 +1,7 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.access.InviteRepo;
-import com.rtkit.golos.core.dto.InviteCreateDto;
+import com.rtkit.golos.core.web.request.AddInviteRequest;
 import com.rtkit.golos.core.dto.InviteDto;
 import com.rtkit.golos.core.entity.Invite;
 import com.rtkit.golos.core.mapper.InviteMapper;
@@ -16,7 +16,7 @@ public class InviteService {
     private InviteMapper inviteMapper;
 
     @Transactional
-    public Invite addInvite(InviteCreateDto inviteDto) {
+    public Invite addInvite(AddInviteRequest inviteDto) {
         Invite newInvite = inviteMapper.toModel(inviteDto);
         return inviteRepo.save(newInvite);
     }

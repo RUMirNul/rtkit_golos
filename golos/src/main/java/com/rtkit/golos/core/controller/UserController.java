@@ -1,6 +1,6 @@
 package com.rtkit.golos.core.controller;
 
-import com.rtkit.golos.core.dto.UserCreateDto;
+import com.rtkit.golos.core.web.request.AddUserRequest;
 import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.service.PollService;
 import com.rtkit.golos.core.service.PublishService;
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody UserCreateDto request) {
+    public ResponseEntity<?> addUser(@RequestBody AddUserRequest request) {
         UserDto userDto = userService.addUser(request);
         if (userDto != null) publishService.publishRegisterMessage(userDto);
         return ResponseEntity.ok(userDto);

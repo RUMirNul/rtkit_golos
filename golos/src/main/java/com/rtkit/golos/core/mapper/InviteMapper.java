@@ -1,6 +1,6 @@
 package com.rtkit.golos.core.mapper;
 
-import com.rtkit.golos.core.dto.InviteCreateDto;
+import com.rtkit.golos.core.web.request.AddInviteRequest;
 import com.rtkit.golos.core.dto.InviteDto;
 import com.rtkit.golos.core.entity.Invite;
 import org.mapstruct.Mapper;
@@ -12,7 +12,7 @@ public interface InviteMapper {
     @Mapping(target = "expireDt", ignore = true)
     @Mapping(target = "createdDt", ignore = true)
     @Mapping(target = "id", ignore = true)
-    Invite toModel(InviteCreateDto inviteDto);
+    Invite toModel(AddInviteRequest inviteDto);
 
     InviteDto toDto(Invite invite);
 }
