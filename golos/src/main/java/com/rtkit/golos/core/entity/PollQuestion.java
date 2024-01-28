@@ -21,6 +21,10 @@ public class PollQuestion {
     @JoinColumn(name = "pollid", nullable = false)
     private Poll pollId;
 
+    @OneToOne
+    @JoinColumn(name = "questionid", nullable = false)
+    private Question questionId;
+
     @Column(name = "orderind", nullable = false)
     private Short orderInd;
 
