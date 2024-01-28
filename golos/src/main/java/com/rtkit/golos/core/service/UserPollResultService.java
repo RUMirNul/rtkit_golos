@@ -1,7 +1,7 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.access.UserPollResultRepo;
-import com.rtkit.golos.core.dto.UserPollResultCreateDto;
+import com.rtkit.golos.core.web.request.AddUserPollResultRequest;
 import com.rtkit.golos.core.dto.UserPollResultDto;
 import com.rtkit.golos.core.entity.UserPollResult;
 import com.rtkit.golos.core.entity.UserPollStatus;
@@ -25,6 +25,10 @@ public class UserPollResultService {
         return userMapper.toDto(userPollResultRepo.getReferenceById(userId));
     }
 
+    public List<UserPollResultDto> getParticipationByUserId(Integer userId) {
+        return userMapper.toDto(userPollResultRepo.findByUserId(userId));
+    }
+
     public List<UserPollResultDto> getAllUserResults() {
         List<UserPollResultDto> userList = new ArrayList<>();
         for (UserPollResult result : userPollResultRepo.findAll())
@@ -32,7 +36,7 @@ public class UserPollResultService {
         return userList;
     }
 
-    public UserPollResultDto addResult(UserPollResultCreateDto newResult) {
+    public UserPollResultDto addResult(AddUserPollResultRequest newResult) {
         UserPollResult createdUser = userMapper.toModel(newResult);
         createdUser.setStatus(UserPollStatus.ONGOING);
         UserPollResult createdPoll = userPollResultRepo.saveAndFlush(createdUser);

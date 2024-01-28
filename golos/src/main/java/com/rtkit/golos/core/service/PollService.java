@@ -1,10 +1,10 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.access.PollRepo;
-import com.rtkit.golos.core.dto.PollCreateDto;
+import com.rtkit.golos.core.web.request.AddPollRequest;
 import com.rtkit.golos.core.dto.PollDto;
 import com.rtkit.golos.core.dto.PollStatusDto;
-import com.rtkit.golos.core.dto.PollUpdateDto;
+import com.rtkit.golos.core.web.request.UpdatePollRequest;
 import com.rtkit.golos.core.entity.Poll;
 import com.rtkit.golos.core.entity.PollStatus;
 import com.rtkit.golos.core.exception.NotFoundException;
@@ -29,6 +29,10 @@ public class PollService {
         return pollMapper.toDto(pollRepo.getReferenceById(pollId));
     }
 
+    public List<PollDto> getPollByUserId(Integer userId) {
+        return pollMapper.toDto(pollRepo.findByUserId(userId));
+    }
+
     public List<PollDto> getAllPolls() {
         List<PollDto> pollList = new ArrayList<>();
         for (Poll poll : pollRepo.findAll())
@@ -43,14 +47,14 @@ public class PollService {
         return new PollStatusDto(statusDto, statusDto.size());
     }
 
-    public PollDto addPoll(PollCreateDto createPollDto) {
+    public PollDto addPoll(AddPollRequest createPollDto) {
         PollDto requestDto = pollMapper.toDto(createPollDto);
         Poll newPoll = pollMapper.toModel(requestDto);
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);
         return pollMapper.toDto(createdPoll);
     }
 
-    public PollDto updatePollDto(PollUpdateDto pollUpdateDto) {
+    public PollDto updatePollDto(UpdatePollRequest pollUpdateDto) {
         PollDto requestDto = pollMapper.toDto(pollUpdateDto);
         Poll newPoll = pollMapper.toModel(requestDto);
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);

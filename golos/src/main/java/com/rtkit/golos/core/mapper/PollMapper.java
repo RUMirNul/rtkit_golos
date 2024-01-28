@@ -1,11 +1,13 @@
 package com.rtkit.golos.core.mapper;
 
-import com.rtkit.golos.core.dto.PollCreateDto;
+import com.rtkit.golos.core.web.request.AddPollRequest;
 import com.rtkit.golos.core.dto.PollDto;
-import com.rtkit.golos.core.dto.PollUpdateDto;
+import com.rtkit.golos.core.web.request.UpdatePollRequest;
 import com.rtkit.golos.core.entity.Poll;
 import com.rtkit.golos.core.entity.PollStatus;
 import org.mapstruct.*;
+
+import java.util.List;
 
 @Mapper(componentModel="spring", uses = {UserMapperUtil.class})
 public interface PollMapper {
@@ -18,11 +20,11 @@ public interface PollMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDt", ignore = true)
-    PollDto toDto(PollCreateDto dto);
+    PollDto toDto(AddPollRequest dto);
 
     @Mapping(target = "authorId", ignore = true)
     @Mapping(target = "createdDt", ignore = true)
-    PollDto toDto(PollUpdateDto dto);
+    PollDto toDto(UpdatePollRequest dto);
 
     @ValueMappings({
             @ValueMapping(source="HIDDEN", target="HIDDEN"),
@@ -33,4 +35,6 @@ public interface PollMapper {
             @ValueMapping(source=MappingConstants.NULL, target="DRAFT"),
     })
     PollStatus toPollStatus(String dateType);
+
+    List<PollDto> toDto(List<Poll> byUserId);
 }

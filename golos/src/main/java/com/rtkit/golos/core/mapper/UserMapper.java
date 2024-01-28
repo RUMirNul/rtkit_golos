@@ -1,6 +1,6 @@
 package com.rtkit.golos.core.mapper;
 
-import com.rtkit.golos.core.dto.UserCreateDto;
+import com.rtkit.golos.core.web.request.AddUserRequest;
 import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.entity.GolosUser;
 import com.rtkit.golos.core.entity.UserRole;
@@ -8,7 +8,6 @@ import org.mapstruct.*;
 
 @Mapper(componentModel="spring", uses = {UserMapperUtil.class})
 public interface UserMapper {
-    @Mapping(target = "id", ignore = true)
     UserDto toDto(GolosUser dto);
 
     @ValueMappings({
@@ -19,5 +18,5 @@ public interface UserMapper {
     UserRole toUserRole(String roleType);
 
     @Mapping(target = "id", ignore = true)
-    GolosUser toModel(UserCreateDto newUser);
+    GolosUser toModel(AddUserRequest newUser);
 }
