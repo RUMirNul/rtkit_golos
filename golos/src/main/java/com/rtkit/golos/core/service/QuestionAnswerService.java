@@ -1,9 +1,6 @@
 package com.rtkit.golos.core.service;
 
-import com.rtkit.golos.core.access.BranchingAnswerRepository;
-import com.rtkit.golos.core.access.ImageAnswerRepository;
-import com.rtkit.golos.core.access.QuestionAnswerRepository;
-import com.rtkit.golos.core.access.TextAnswerRepository;
+import com.rtkit.golos.core.access.*;
 import com.rtkit.golos.core.dto.AddAnswerDto;
 import com.rtkit.golos.core.dto.AddQuestionAnswerDto;
 import com.rtkit.golos.core.dto.AnswerDto;
@@ -27,7 +24,7 @@ public class QuestionAnswerService {
     private QuestionAnswerRepository questionAnswerRepository;
     private TextAnswerRepository textAnswerRepository;
     private ImageAnswerRepository imageAnswerRepository;
-    private BranchingAnswerRepository branchingAnswerRepository;
+    private UserTextAnswerRepository userTextAnswerRepository;
 
     private AnswerService answerService;
     private AnswerMapper answerMapper;
@@ -82,15 +79,14 @@ public class QuestionAnswerService {
                 log.info("Сохранён ответ с изображением: {}", savedImageAnswer);
                 return questionAnswerMapper.toDto(savedImageAnswer);
             }
-            case BRANCHING -> {
-                BranchingAnswer branchingAnswer = new BranchingAnswer();
-                branchingAnswer.setAnswer(answer);
-                branchingAnswer.setOrderInd(Short.parseShort(content));
-                BranchingAnswer savedBranchingAnswer = branchingAnswerRepository.save(branchingAnswer);
-                log.info("Сохранён ответ с ветвлением: {}", savedBranchingAnswer);
-                return questionAnswerMapper.toDto(savedBranchingAnswer);
+            case USERTEXT -> {
+                UserTextAnswer userTextAnswer = new UserTextAnswer();
+                userTextAnswer.setAnswer(answer);
+                userTextAnswer.setPreparedText(content);
+                UserTextAnswer savedUserTextAnswer = userTextAnswerRepository.save(userTextAnswer);
+                log.info("Сохранён ответ с пользовательским текстом: {}", savedUserTextAnswer);
+                return questionAnswerMapper.toDto(savedUserTextAnswer);
             }
-            //TODO usertext
         }
 
         return new QuestionAnswerDto();
@@ -127,8 +123,8 @@ public class QuestionAnswerService {
                         result.add(questionAnswerMapper.toDto(textAnswerRepository.getReferenceById(answerDto.getId())));
                 case IMAGE ->
                         result.add(questionAnswerMapper.toDto(imageAnswerRepository.getReferenceById(answerDto.getId())));
-                case BRANCHING ->
-                        result.add(questionAnswerMapper.toDto(branchingAnswerRepository.getReferenceById(answerDto.getId())));
+                case USERTEXT ->
+                        result.add(questionAnswerMapper.toDto(userTextAnswerRepository.getReferenceById(answerDto.getId())));
             }
         }
         log.info("Типизированные ответы на вопрос: {}", result);
@@ -145,7 +141,7 @@ public class QuestionAnswerService {
         switch (answerDto.getType()) {
             case TEXT -> textAnswerRepository.deleteById(answerDto.getId());
             case IMAGE -> imageAnswerRepository.deleteById(answerDto.getId());
-            case BRANCHING -> branchingAnswerRepository.deleteById(answerDto.getId());
+            case USERTEXT -> userTextAnswerRepository.deleteById(answerDto.getId());
         }
         QuestionAnswer questionAnswer = questionAnswerRepository.findByIdAnswerId(answerDto.getId());
         log.info("Найденный QuestionAnswer для удаления: {}", questionAnswer);
@@ -157,6 +153,8 @@ public class QuestionAnswerService {
     public QuestionAnswerDto updateQuestionAnswer(QuestionAnswerDto newQuestionAnswer) {
         log.info("Запрос обновления ответа: {}", newQuestionAnswer);
         AnswerDto updatableAnswer = answerService.getAnswer(newQuestionAnswer.getId());
+        updatableAnswer.setNextQuestionId(newQuestionAnswer.getNextQuestionId());
+        answerService.saveAnswer(updatableAnswer);
 
         if (updatableAnswer.getType().equals(newQuestionAnswer.getType())) {
             switch (updatableAnswer.getType()) {
@@ -176,13 +174,13 @@ public class QuestionAnswerService {
                     log.info("Обновленный ответ с изображением: {}", updatedImageAnswer);
                     return updatedImageAnswer;
                 }
-                case BRANCHING -> {
-                    log.info("Обновление ответа с ветвлением.");
-                    BranchingAnswer branchingAnswer = branchingAnswerRepository.getReferenceById(updatableAnswer.getId());
-                    branchingAnswer.setOrderInd(Short.parseShort(newQuestionAnswer.getContent()));
-                    QuestionAnswerDto updatedBranchingAnswer = questionAnswerMapper.toDto(branchingAnswerRepository.save(branchingAnswer));
-                    log.info("Обновленный ответ с ветвлением: {}", updatedBranchingAnswer);
-                    return updatedBranchingAnswer;
+                case USERTEXT -> {
+                    log.info("Обновление ответа с текстом пользователя.");
+                    UserTextAnswer userTextAnswer = userTextAnswerRepository.getReferenceById(updatableAnswer.getId());
+                    userTextAnswer.setPreparedText(newQuestionAnswer.getContent());
+                    QuestionAnswerDto updatedUserTextAnswer = questionAnswerMapper.toDto(userTextAnswerRepository.save(userTextAnswer));
+                    log.info("Обновленный ответ с ветвлением: {}", updatedUserTextAnswer);
+                    return updatedUserTextAnswer;
                 }
             }
         } else {
@@ -195,13 +193,14 @@ public class QuestionAnswerService {
                     log.info("Удаление ответа с изображением с id = {}", updatableAnswer.getId());
                     imageAnswerRepository.deleteById(updatableAnswer.getId());
                 }
-                case BRANCHING -> {
-                    log.info("Удаление ответа с ветвлением с id = {}", updatableAnswer.getId());
-                    branchingAnswerRepository.deleteById(updatableAnswer.getId());
+                case USERTEXT -> {
+                    log.info("Удаление ответа с пользовательским текстом с id = {}", updatableAnswer.getId());
+                    userTextAnswerRepository.deleteById(updatableAnswer.getId());
                 }
             }
 
             updatableAnswer.setType(newQuestionAnswer.getType());
+            updatableAnswer.setNextQuestionId(newQuestionAnswer.getNextQuestionId());
             Answer updatedAnswer = answerService.saveAnswer(updatableAnswer);
             return saveTypedAnswer(updatedAnswer, newQuestionAnswer.getContent());
         }

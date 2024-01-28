@@ -10,7 +10,5 @@ public enum AnswerType {
     @JsonProperty("text")
     TEXT,
     @JsonProperty("image")
-    IMAGE,
-    @JsonProperty("branching")
-    BRANCHING
+    IMAGE
 }

@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 public class AnswerDto {
     private Integer id;
     private AnswerType type;
+    private Integer nextQuestionId;
 }
