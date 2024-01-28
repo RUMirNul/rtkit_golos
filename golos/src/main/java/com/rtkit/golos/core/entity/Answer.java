@@ -19,4 +19,7 @@ public class Answer {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private AnswerType type;
+
+    @Column(name = "nextquestionid")
+    private Integer nextQuestionId;
 }

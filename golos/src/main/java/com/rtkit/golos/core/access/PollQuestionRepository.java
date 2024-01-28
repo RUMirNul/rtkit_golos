@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PollQuestionRepository extends JpaRepository<PollQuestion, Integer> {
-    List<PollQuestion> findAllByPollId(int pollId);
+    List<PollQuestion> findAllByPollIdId(Integer pollId);
 }

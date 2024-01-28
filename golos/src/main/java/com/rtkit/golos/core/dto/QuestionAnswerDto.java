@@ -10,5 +10,5 @@ public class QuestionAnswerDto {
     private Integer id;
     private AnswerType type;
     private String content;
-
+    private Integer nextQuestionId;
 }

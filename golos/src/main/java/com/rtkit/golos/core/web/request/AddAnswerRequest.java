@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 public class AddAnswerRequest {
     private AnswerType type;
     private String content;
+    private Integer nextQuestionId;
 }

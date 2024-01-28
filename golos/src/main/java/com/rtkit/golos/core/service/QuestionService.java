@@ -27,7 +27,7 @@ public class QuestionService {
     public List<PollQuestionDto> getAllQuestionsByPollId(int pollId) {
         log.info("Запрос получения вопросов по id опроса: {}", pollId);
 
-        List<PollQuestion> pollQuestions = pollQuestionRepository.findAllByPollId(pollId);
+        List<PollQuestion> pollQuestions = pollQuestionRepository.findAllByPollIdId(pollId);
         return questionMapper.toPollQuestionDtos(pollQuestions);
     }
 
