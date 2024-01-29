@@ -13,10 +13,10 @@ public interface UserPollResultRepo extends JpaRepository<UserPollResult, Intege
     @Query(value = "select * from userpollresult where userid = :id", nativeQuery = true)
     List<UserPollResult> findByUserId(@Param("id") Integer id);
 
-    @Query(value = "select count(*) from userpollresult where pollId = :id", nativeQuery = true)
+    @Query(value = "select count(*) from userpollresult where pollId = :pollId", nativeQuery = true)
     Integer countAllByPollIdId(@Param("pollId") Integer pollId);
 
-    @Query(value = "select count(*) from userpollresult where pollId = :id and status = :status", nativeQuery = true)
+    @Query(value = "select count(*) from userpollresult where pollId = :pollId and status = :status", nativeQuery = true)
     Integer countAllByPollIdAndStatus(@Param("pollId") Integer pollId, @Param("status") String status);
 }
 

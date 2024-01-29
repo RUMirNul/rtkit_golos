@@ -54,7 +54,7 @@ public class QuestionService {
         Question savedQuestion = questionRepository.save(question);
 
         PollQuestion pollQuestion = new PollQuestion();
-        pollQuestion.setPollId(pollMapper.toModel(pollService.getPollById(pollQuestionDto.getPollId())));
+        pollQuestion.setPollId(pollMapper.toEntity(pollService.getPollById(pollQuestionDto.getPollId())));
         pollQuestion.setQuestionId(savedQuestion);
         PollQuestion savedPollQuestion = pollQuestionRepository.save(pollQuestion);
 
