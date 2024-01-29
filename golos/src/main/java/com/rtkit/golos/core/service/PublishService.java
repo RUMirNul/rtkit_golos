@@ -2,6 +2,7 @@ package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.dto.InviteQueue;
 import com.rtkit.golos.core.dto.InviteQueueDto;
+import com.rtkit.golos.core.dto.StatDto;
 import com.rtkit.golos.core.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ public class PublishService {
 
     public void publishRegisterMessage(UserDto userDto) {
         log.info("Sending registration message: " + userDto);
-//        rabbitTemplate.convertAndSend("golos", "activation", userDto);
+        rabbitTemplate.convertAndSend("golos", "activation", userDto);
     }
 
     public void publishInviteMessage(String name, int inviteId, InviteQueueDto inviteQueueDto) {
@@ -27,4 +28,8 @@ public class PublishService {
         }
     }
 
+    public void publishStatMessage(StatDto statDto) {
+        log.info("Sending stat message" + statDto);
+        rabbitTemplate.convertAndSend("golos", "stat", statDto);
+    }
 }

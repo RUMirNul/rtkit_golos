@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public UserDto addUser(AddUserRequest newUser) {
-        GolosUser createdUser = userMapper.toModel(newUser);
+        GolosUser createdUser = userMapper.toEntity(newUser);
         GolosUser createdPoll = userRepo.saveAndFlush(createdUser);
         return userMapper.toDto(createdPoll);
     }

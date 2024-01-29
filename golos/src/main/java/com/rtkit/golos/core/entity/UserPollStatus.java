@@ -4,5 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum UserPollStatus {
-    COMPLETED, DROPPED, ONGOING
+    COMPLETED("COMPLETED"), DROPPED("DROPPED"), ONGOING("ONGOING");
+
+    private final String name;
+    UserPollStatus(String name) {
+        this.name = name;
+    }
 }

@@ -1,6 +1,7 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.access.UserPollResultRepo;
+import com.rtkit.golos.core.dto.StatDto;
 import com.rtkit.golos.core.web.request.AddUserPollResultRequest;
 import com.rtkit.golos.core.dto.UserPollResultDto;
 import com.rtkit.golos.core.entity.UserPollResult;
@@ -37,18 +38,24 @@ public class UserPollResultService {
     }
 
     public UserPollResultDto addResult(AddUserPollResultRequest newResult) {
-        UserPollResult createdUser = userMapper.toModel(newResult);
+        UserPollResult createdUser = userMapper.toEntity(newResult);
         createdUser.setStatus(UserPollStatus.ONGOING);
         UserPollResult createdPoll = userPollResultRepo.saveAndFlush(createdUser);
         return userMapper.toDto(createdPoll);
     }
 
-    public UserPollResultDto updateResultPollStatus(Integer pollId, String statusName) {
+    public UserPollResultDto updateResultPollStatus(Integer resultId, String statusName) {
         UserPollStatus resultStatus = userMapper.toUserPollResult(statusName);
-        UserPollResult foundResult = userPollResultRepo.findById(pollId)
-                .orElseThrow(() -> new NotFoundException("Опрос с id:%d не найден".formatted(pollId)));
+        UserPollResult foundResult = userPollResultRepo.findById(resultId)
+                .orElseThrow(() -> new NotFoundException("Опрос с id:%d не найден".formatted(resultId)));
         foundResult.setStatus(resultStatus);
         UserPollResult updatedResult = userPollResultRepo.save(foundResult);
         return userMapper.toDto(updatedResult);
+    }
+
+    public StatDto getStatistics(Integer pollId) {
+        Integer totalVoters = userPollResultRepo.countAllByPollIdId(pollId);
+        Integer finishedCount = userPollResultRepo.countAllByPollIdAndStatus(pollId, UserPollStatus.COMPLETED.name());
+        return new StatDto(totalVoters, finishedCount, totalVoters - finishedCount);
     }
 }

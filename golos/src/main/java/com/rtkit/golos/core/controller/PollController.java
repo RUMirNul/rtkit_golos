@@ -20,17 +20,17 @@ public class PollController {
     private final PublishService publishService;
 
     @GetMapping("/status")
-    public ResponseEntity<?> getAllStatues(){
+    public ResponseEntity<?> getAllStatues() {
         return ResponseEntity.ok(pollService.getAllStatuses());
     }
 
     @GetMapping("/{pollId}")
-    public ResponseEntity<?> getPollById(@PathVariable("pollId") int pollId){
+    public ResponseEntity<?> getPollById(@PathVariable("pollId") int pollId) {
         return ResponseEntity.ok(pollService.getPollById(pollId));
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getAllPolls(){
+    public ResponseEntity<?> getAllPolls() {
         return ResponseEntity.ok(pollService.getAllPolls());
     }
 
@@ -56,7 +56,8 @@ public class PollController {
     }
 
     @GetMapping("/{pollId}/invite/{inviteId}")
-    public ResponseEntity<?> getInvite(@PathVariable("inviteId") int inviteId) {
+    public ResponseEntity<?> getInvite(@PathVariable("inviteId") int inviteId,
+                                       @PathVariable("pollId") int pollId) {
         return ResponseEntity.ok(inviteService.getInvite(inviteId));
     }
 
@@ -67,8 +68,8 @@ public class PollController {
 
     @PostMapping("/{pollId}/invite/{inviteId}")
     public void sendEmail(@PathVariable("pollId") int pollId,
-                                       @PathVariable("inviteId") int inviteId,
-                                       @RequestBody InviteQueueDto request) {
+                          @PathVariable("inviteId") int inviteId,
+                          @RequestBody InviteQueueDto request) {
         String name = pollService.getPollById(pollId).getName();
         publishService.publishInviteMessage(name, inviteId, request);
     }

@@ -49,14 +49,14 @@ public class PollService {
 
     public PollDto addPoll(AddPollRequest createPollDto) {
         PollDto requestDto = pollMapper.toDto(createPollDto);
-        Poll newPoll = pollMapper.toModel(requestDto);
+        Poll newPoll = pollMapper.toEntity(requestDto);
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);
         return pollMapper.toDto(createdPoll);
     }
 
     public PollDto updatePollDto(UpdatePollRequest pollUpdateDto) {
         PollDto requestDto = pollMapper.toDto(pollUpdateDto);
-        Poll newPoll = pollMapper.toModel(requestDto);
+        Poll newPoll = pollMapper.toEntity(requestDto);
         Poll createdPoll = pollRepo.saveAndFlush(newPoll);
         return pollMapper.toDto(createdPoll);
     }

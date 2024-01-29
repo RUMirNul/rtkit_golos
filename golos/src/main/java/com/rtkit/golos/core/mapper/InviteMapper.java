@@ -12,7 +12,7 @@ public interface InviteMapper {
     @Mapping(target = "expireDt", ignore = true)
     @Mapping(target = "createdDt", ignore = true)
     @Mapping(target = "id", ignore = true)
-    Invite toModel(AddInviteRequest inviteDto);
+    Invite toEntity(AddInviteRequest inviteDto);
 
     InviteDto toDto(Invite invite);
 }

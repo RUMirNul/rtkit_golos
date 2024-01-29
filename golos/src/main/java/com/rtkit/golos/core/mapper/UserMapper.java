@@ -18,5 +18,5 @@ public interface UserMapper {
     UserRole toUserRole(String roleType);
 
     @Mapping(target = "id", ignore = true)
-    GolosUser toModel(AddUserRequest newUser);
+    GolosUser toEntity(AddUserRequest newUser);
 }

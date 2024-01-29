@@ -17,7 +17,7 @@ public class InviteService {
 
     @Transactional
     public Invite addInvite(AddInviteRequest inviteDto) {
-        Invite newInvite = inviteMapper.toModel(inviteDto);
+        Invite newInvite = inviteMapper.toEntity(inviteDto);
         return inviteRepo.save(newInvite);
     }
 

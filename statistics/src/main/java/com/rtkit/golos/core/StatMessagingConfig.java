@@ -1,4 +1,4 @@
-package com.rtkit.golos.core.config;
+package com.rtkit.golos.core;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.Binding;
@@ -15,8 +15,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 @AllArgsConstructor
 @Configuration
-public class MessagingConfig {
-
+public class StatMessagingConfig {
     @Bean
     @Autowired
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
@@ -28,26 +27,6 @@ public class MessagingConfig {
     @Bean
     public DirectExchange exchange() {
         return new DirectExchange("golos");
-    }
-
-    @Bean
-    public Queue activationMessageQueue() {
-        return new Queue("activation", false);
-    }
-
-    @Bean
-    public Binding bindingActivationQueue(@Qualifier("activationMessageQueue") Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("activation");
-    }
-
-    @Bean
-    public Queue inviteMessageQueue() {
-        return new Queue("invite", false);
-    }
-
-    @Bean
-    public Binding bindingInviteQueue(@Qualifier("inviteMessageQueue") Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("invite");
     }
 
     @Bean

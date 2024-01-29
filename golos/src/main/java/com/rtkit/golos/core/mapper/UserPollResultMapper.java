@@ -20,7 +20,7 @@ public interface UserPollResultMapper {
     @Mapping(target = "startedDt", ignore = true)
     @Mapping(target = "endedDt", ignore = true)
     @Mapping(target = "status", ignore = true)
-    UserPollResult toModel(AddUserPollResultRequest newResult);
+    UserPollResult toEntity(AddUserPollResultRequest newResult);
 
     @ValueMappings({
             @ValueMapping(source="ONGOING", target="ONGOING"),

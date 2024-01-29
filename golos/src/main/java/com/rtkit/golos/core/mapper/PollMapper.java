@@ -13,7 +13,7 @@ import java.util.List;
 public interface PollMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "authorId", source = "authorId")
-    Poll toModel(PollDto dto);
+    Poll toEntity(PollDto dto);
 
     @Mapping(target = "authorId", source = "authorId")
     PollDto toDto(Poll createdPoll);

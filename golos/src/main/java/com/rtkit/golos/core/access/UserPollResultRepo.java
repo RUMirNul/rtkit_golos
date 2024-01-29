@@ -11,6 +11,12 @@ import java.util.List;
 @Repository
 public interface UserPollResultRepo extends JpaRepository<UserPollResult, Integer> {
     @Query(value = "select * from userpollresult where userid = :id", nativeQuery = true)
-    List<UserPollResult> findByUserId(@Param("id")Integer id);
+    List<UserPollResult> findByUserId(@Param("id") Integer id);
+
+    @Query(value = "select count(*) from userpollresult where pollId = :id", nativeQuery = true)
+    Integer countAllByPollIdId(@Param("pollId") Integer pollId);
+
+    @Query(value = "select count(*) from userpollresult where pollId = :id and status = :status", nativeQuery = true)
+    Integer countAllByPollIdAndStatus(@Param("pollId") Integer pollId, @Param("status") String status);
 }
 
