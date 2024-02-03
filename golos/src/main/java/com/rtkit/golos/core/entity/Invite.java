@@ -32,7 +32,7 @@ public class Invite {
     @Column(name = "expiredt")
     private Instant expireDt;
 
-    @Column(name = "uses", nullable = false)
+    @Column(name = "uses", nullable = false, columnDefinition="Integer default '0'")
     private Integer uses;
 
     @Column(name = "maxuses", nullable = false)

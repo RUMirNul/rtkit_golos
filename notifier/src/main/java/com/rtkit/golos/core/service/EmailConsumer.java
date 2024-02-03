@@ -31,9 +31,8 @@ public class EmailConsumer {
     }
 
     @RabbitListener(queues = "activation")
-    public void onActivationMessage(final String message) throws JsonProcessingException {
-        log.info("Запрос активации: {} ", message);
-        UserRegisterDto userDto = mapper.readValue(message, UserRegisterDto.class);
+    public void onActivationMessage(final UserRegisterDto userDto) throws JsonProcessingException {
+        log.info("Запрос активации: {} ", userDto);
         String subject = "Here's your activation code:" + userDto.activationCode();
         String content = "Ignore";
         setEmail(createEmail(userDto.email(), subject, content));

@@ -1,5 +1,6 @@
 package com.rtkit.golos.core.controller;
 
+import com.rtkit.golos.core.dto.PollDtoList;
 import com.rtkit.golos.core.web.request.AddInviteRequest;
 import com.rtkit.golos.core.dto.InviteQueueDto;
 import com.rtkit.golos.core.web.request.AddPollRequest;
@@ -8,11 +9,15 @@ import com.rtkit.golos.core.service.InviteService;
 import com.rtkit.golos.core.service.PollService;
 import com.rtkit.golos.core.service.PublishService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/poll")
 public class PollController {
     private final PollService pollService;
@@ -24,14 +29,15 @@ public class PollController {
         return ResponseEntity.ok(pollService.getAllStatuses());
     }
 
-    @GetMapping("/{pollId}")
+    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/{pollId}")
     public ResponseEntity<?> getPollById(@PathVariable("pollId") int pollId) {
         return ResponseEntity.ok(pollService.getPollById(pollId));
     }
 
     @GetMapping("/")
     public ResponseEntity<?> getAllPolls() {
-        return ResponseEntity.ok(pollService.getAllPolls());
+        return ResponseEntity.ok(new PollDtoList(pollService.getAllPolls()));
     }
 
     @PostMapping
@@ -62,8 +68,9 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/invite")
-    public ResponseEntity<?> createInvite(@RequestBody AddInviteRequest request) {
-        return ResponseEntity.ok(inviteService.addInvite(request));
+    public ResponseEntity<?> createInvite(@RequestBody AddInviteRequest request,
+                                          @PathVariable("pollId") int pollId) {
+        return ResponseEntity.ok(inviteService.addInvite(pollId, request));
     }
 
     @PostMapping("/{pollId}/invite/{inviteId}")
@@ -71,6 +78,7 @@ public class PollController {
                           @PathVariable("inviteId") int inviteId,
                           @RequestBody InviteQueueDto request) {
         String name = pollService.getPollById(pollId).getName();
+        log.info("Запрос на рассылки приглашений: {}", request);
         publishService.publishInviteMessage(name, inviteId, request);
     }
 }
