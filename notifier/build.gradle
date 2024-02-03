@@ -1,16 +1,13 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot'
+	id 'org.springframework.boot' version '3.2.1'
 	id 'io.spring.dependency-management'
 	id "io.freefair.lombok" version "8.3"
 }
 
 group = 'com.rtkit.golos.notifier'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	sourceCompatibility = '17'
-}
+version = '0.0.1'
+sourceCompatibility = '17'
 
 bootJar {
 	enabled = true

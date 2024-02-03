@@ -4,15 +4,21 @@ spring:
   liquibase:
     enabled: true
   jpa:
+    database: postgresql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/rtkit_golos
+#    url: jdbc:postgresql://localhost:5432/rtkit_golos
+    url: jdbc:postgresql://localhost:5432/golosbd
     username: test
     password: test
   rabbitmq:
-    host: localhost
+    host: rabbitmq
+    #    host: localhost
     port: 5672
     username: admin
     password: admin
