@@ -1,0 +1,116 @@
+version: "3.4"
+services:
+  rabbitmq:
+    image: async/rabbitmq:latest
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      backend: { aliases: [rabbitmq.backend] }
+    restart: unless-stopped
+
+  postgres:
+    container_name: postgres_container
+    image: postgres:latest
+    environment:
+      netstat: host
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: golosbd
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PGDATA: /data/postgres
+    volumes:
+      - ./create_extensions.sql:/docker-entrypoint-initdb.d/create_extensions.sql:ro
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      backend: { aliases: [ postgres.backend ] }
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=test@test.com
+      - PGADMIN_DEFAULT_PASSWORD=test
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5040:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      backend: { aliases: [ pgadmin.backend ] }
+
+  golos:
+    image: golos:latest
+    container_name: golos
+    build:
+      context: ./golos
+      args:
+        APP_NAME: golos
+        APP_VERSION: 0.0.1
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - rabbitmq
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/golosbd
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      backend: { aliases: [ golos.backend ] }
+
+  notifier:
+    image: notifier:latest
+    container_name: notifier
+    build:
+      context: ./notifier
+      args:
+        APP_NAME: notifier
+        APP_VERSION: 0.0.1
+    ports:
+      - "5050:5050"
+    restart: always
+    depends_on:
+      - rabbitmq
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      backend: { aliases: [ notifier.backend ] }
+
+  statistics:
+    image: statistics:latest
+    container_name: statistics
+    build:
+      context: ./statistics
+      args:
+        APP_NAME: statistics
+        APP_VERSION: 0.0.1
+    ports:
+      - "5060:5060"
+    restart: always
+    depends_on:
+      - rabbitmq
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      backend: { aliases: [ statistics.backend ] }
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin-data:

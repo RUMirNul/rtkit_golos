@@ -5,10 +5,7 @@ plugins {
 }
 
 group = 'com.rtkit.golos'
-
-java {
-	sourceCompatibility = '17'
-}
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -20,4 +17,12 @@ allprojects {
 	repositories {
 		mavenCentral()
 	}
+}
+
+bootJar {
+	enabled = false
+}
+
+bootBuildImage{
+	enabled = false
 }
