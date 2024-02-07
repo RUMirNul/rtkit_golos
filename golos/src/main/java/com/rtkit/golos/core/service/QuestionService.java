@@ -2,6 +2,7 @@ package com.rtkit.golos.core.service;
 
 
 import com.rtkit.golos.core.access.PollQuestionRepository;
+import com.rtkit.golos.core.access.PollRepo;
 import com.rtkit.golos.core.access.QuestionRepository;
 import com.rtkit.golos.core.dto.PollQuestionDto;
 import com.rtkit.golos.core.dto.QuestionDto;
@@ -26,6 +27,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final PollQuestionRepository pollQuestionRepository;
     private final QuestionMapper questionMapper;
+    private final PollRepo pollRepo;
     private final PollService pollService;
     private final PollMapper pollMapper;
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -35,6 +37,17 @@ public class QuestionService {
 
         List<PollQuestion> pollQuestions = pollQuestionRepository.findAllByPollIdId(pollId);
         return questionMapper.toPollQuestionDtos(pollQuestions);
+    }
+
+    public PollQuestionDto getPollQuestionById(int id) {
+//        PollQuestionDto pollQuestionDto = new PollQuestionDto();
+//        PollQuestion pollQuestion = pollQuestionRepository.findByQuestionIdId(id);
+//        pollQuestionDto.setId(pollQuestion.getId());
+//        pollQuestionDto.setPollId(pollQuestion.getPollId().getId());
+//        pollQuestionDto.setQuestion(getQuestionById(id));
+
+        PollQuestionDto pollQuestionDto = questionMapper.toPollQuestionDto(pollQuestionRepository.findByQuestionIdId(id));
+        return pollQuestionDto;
     }
 
     public QuestionDto getQuestionById(int id) {
@@ -54,8 +67,9 @@ public class QuestionService {
         Question savedQuestion = questionRepository.save(question);
 
         PollQuestion pollQuestion = new PollQuestion();
-        pollQuestion.setPollId(pollMapper.toEntity(pollService.getPollById(pollQuestionDto.getPollId())));
+        pollQuestion.setPollId(pollRepo.getReferenceById(pollQuestionDto.getPollId()));
         pollQuestion.setQuestionId(savedQuestion);
+        pollQuestion.setOrderInd((short) 0);
         PollQuestion savedPollQuestion = pollQuestionRepository.save(pollQuestion);
 
         PollQuestionDto savedPollQuestionDto = new PollQuestionDto();
