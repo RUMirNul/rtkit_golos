@@ -3,6 +3,7 @@ package com.rtkit.golos.core.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,6 +12,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "poll")
 public class Poll {
@@ -19,6 +21,7 @@ public class Poll {
     @Column(name = "pollid", nullable = false)
     private Integer id;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "authorid", nullable = false)
@@ -37,16 +40,4 @@ public class Poll {
     @Enumerated(EnumType.STRING)
     @Column(name = "pollstatus")
     private PollStatus status;
-
-    @Override
-    public String toString() {
-        return "Poll{" +
-                "id=" + id +
-                ", authorId=" + authorId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", createdDt=" + createdDt +
-                ", status=" + status +
-                '}';
-    }
 }

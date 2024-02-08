@@ -20,7 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class QuestionAnswerService {
-
     private QuestionAnswerRepository questionAnswerRepository;
     private TextAnswerRepository textAnswerRepository;
     private ImageAnswerRepository imageAnswerRepository;

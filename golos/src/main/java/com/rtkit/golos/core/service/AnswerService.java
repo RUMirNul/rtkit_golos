@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 @Slf4j
 public class AnswerService {
-
-
     private AnswerRepository answerRepository;
     private AnswerMapper answerMapper;
 

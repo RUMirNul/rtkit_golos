@@ -12,6 +12,7 @@ import com.rtkit.golos.core.event.NewQuestionCreatedEvent;
 import com.rtkit.golos.core.exception.NotFoundException;
 import com.rtkit.golos.core.mapper.PollMapper;
 import com.rtkit.golos.core.mapper.QuestionMapper;
+import com.rtkit.golos.core.service.implementation.PollServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

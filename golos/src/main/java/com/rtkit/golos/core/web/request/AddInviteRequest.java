@@ -1,14 +1,13 @@
 package com.rtkit.golos.core.web.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@Schema(description = "Запрос для создания приглашения.")
 public class AddInviteRequest {
+    @Schema(description = "Максимальное количество использований.")
     private Integer maxUses;
 }
