@@ -12,7 +12,10 @@ plugins {
 
 group = 'com.rtkit.golos.golos'
 version = '0.0.1'
-sourceCompatibility = '17'
+
+java {
+	sourceCompatibility = '17'
+}
 
 bootJar {
 	enabled = true
@@ -36,6 +39,8 @@ dependencies {
 	implementation 'org.slf4j:slf4j-api'
 	implementation 'ch.qos.logback:logback-classic'
 	implementation 'ch.qos.logback:logback-core'
+
+	implementation 'org.liquibase:liquibase-core:4.26.0'
 
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

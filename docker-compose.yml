@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   rabbitmq:
-    image: async/rabbitmq:latest
+    image: rabbitmq:3-management
     ports:
       - "15672:15672"
       - "5672:5672"
@@ -17,14 +17,13 @@ services:
     image: postgres:latest
     environment:
       netstat: host
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: padmin
       POSTGRES_DB: golosbd
       POSTGRES_HOST_AUTH_METHOD: trust
-      PGDATA: /data/postgres
     volumes:
-      - ./create_extensions.sql:/docker-entrypoint-initdb.d/create_extensions.sql:ro
-      - postgres:/data/postgres
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+      - postgres-db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -112,5 +111,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
+  postgres-db-data:
   pgadmin-data:

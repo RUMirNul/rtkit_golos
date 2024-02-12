@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1707746840938-1" author="1 (generated)">
+        <createTable tableName="answer">
+            <column autoIncrement="true" name="answerid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_answer"/>
+            </column>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="nextquestionid" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-2" author="1 (generated)">
+        <createTable tableName="filequestion">
+            <column name="questionid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_filequestion"/>
+            </column>
+            <column name="filepath" type="VARCHAR(150)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_filequestion"/>
+            </column>
+            <column name="filename" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_filequestion"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-3" author="1 (generated)">
+        <createTable tableName="golosuser">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_golosuser"/>
+            </column>
+            <column name="firstname" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(320)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passhash" type="VARCHAR(320)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-4" author="1 (generated)">
+        <createTable tableName="imageanswer">
+            <column name="answerid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_imageanswer"/>
+            </column>
+            <column name="imagepath" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-5" author="1 (generated)">
+        <createTable tableName="invite">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_invite"/>
+            </column>
+            <column name="pollid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createddt" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiredt" type="DATETIME"/>
+            <column defaultValueNumeric="0" name="uses" type="Integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maxuses" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-6" author="1 (generated)">
+        <createTable tableName="poll">
+            <column autoIncrement="true" name="pollid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_poll"/>
+            </column>
+            <column name="authorid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createddt" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pollstatus" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-7" author="1 (generated)">
+        <createTable tableName="pollquestion">
+            <column autoIncrement="true" name="pollquestionid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pollquestion"/>
+            </column>
+            <column name="pollid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="questionid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderind" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-8" author="1 (generated)">
+        <createTable tableName="question">
+            <column autoIncrement="true" name="questionid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_question"/>
+            </column>
+            <column name="content" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="isanswerrequired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-9" author="1 (generated)">
+        <createTable tableName="questionanswer">
+            <column name="answerorder" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pollquestionid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_questionanswer"/>
+            </column>
+            <column name="answerid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_questionanswer"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-10" author="1 (generated)">
+        <createTable tableName="textanswer">
+            <column name="answerid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_textanswer"/>
+            </column>
+            <column name="content" type="VARCHAR(320)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-11" author="1 (generated)">
+        <createTable tableName="useranswer">
+            <column name="useranswer" type="VARCHAR(320)"/>
+            <column name="resultid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_useranswer"/>
+            </column>
+            <column name="pollquestionid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_useranswer"/>
+            </column>
+            <column name="answerid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_useranswer"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-12" author="1 (generated)">
+        <createTable tableName="userpollresult">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_userpollresult"/>
+            </column>
+            <column name="userid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pollid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="starteddt" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endeddt" type="DATETIME"/>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-13" author="1 (generated)">
+        <createTable tableName="usertextanswer">
+            <column name="answerid" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_usertextanswer"/>
+            </column>
+            <column name="preparedtext" type="VARCHAR(320)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1707746840938-14" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="answerid" baseTableName="imageanswer"
+                                 constraintName="FK_IMAGEANSWER_ON_ANSWERID" referencedColumnNames="answerid"
+                                 referencedTableName="answer"/>
+    </changeSet>
+    <changeSet id="1707746840938-15" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="pollid" baseTableName="invite" constraintName="FK_INVITE_ON_POLLID"
+                                 onDelete="RESTRICT" referencedColumnNames="pollid" referencedTableName="poll"/>
+    </changeSet>
+    <changeSet id="1707746840938-16" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="pollid" baseTableName="pollquestion"
+                                 constraintName="FK_POLLQUESTION_ON_POLLID" onDelete="RESTRICT"
+                                 referencedColumnNames="pollid" referencedTableName="poll"/>
+    </changeSet>
+    <changeSet id="1707746840938-17" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="questionid" baseTableName="pollquestion"
+                                 constraintName="FK_POLLQUESTION_ON_QUESTIONID" referencedColumnNames="questionid"
+                                 referencedTableName="question"/>
+    </changeSet>
+    <changeSet id="1707746840938-18" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="authorid" baseTableName="poll" constraintName="FK_POLL_ON_AUTHORID"
+                                 onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="golosuser"/>
+    </changeSet>
+    <changeSet id="1707746840938-19" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="answerid" baseTableName="textanswer"
+                                 constraintName="FK_TEXTANSWER_ON_ANSWERID" referencedColumnNames="answerid"
+                                 referencedTableName="answer"/>
+    </changeSet>
+    <changeSet id="1707746840938-20" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="pollid" baseTableName="userpollresult"
+                                 constraintName="FK_USERPOLLRESULT_ON_POLLID" onDelete="RESTRICT"
+                                 referencedColumnNames="pollid" referencedTableName="poll"/>
+    </changeSet>
+    <changeSet id="1707746840938-21" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="userid" baseTableName="userpollresult"
+                                 constraintName="FK_USERPOLLRESULT_ON_USERID" onDelete="RESTRICT"
+                                 referencedColumnNames="id" referencedTableName="golosuser"/>
+    </changeSet>
+    <changeSet id="1707746840938-22" author="1 (generated)">
+        <addForeignKeyConstraint baseColumnNames="answerid" baseTableName="usertextanswer"
+                                 constraintName="FK_USERTEXTANSWER_ON_ANSWERID" referencedColumnNames="answerid"
+                                 referencedTableName="answer"/>
+    </changeSet>
+
+</databaseChangeLog>

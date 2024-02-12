@@ -5,7 +5,10 @@ plugins {
 }
 
 group = 'com.rtkit.golos'
-sourceCompatibility = '17'
+
+java {
+	sourceCompatibility = '17'
+}
 
 configurations {
 	compileOnly {
@@ -26,3 +29,7 @@ bootJar {
 bootBuildImage{
 	enabled = false
 }
+
+//liquibase {
+//	classpath "${project.projectDir}/src/main/resources/"
+//}

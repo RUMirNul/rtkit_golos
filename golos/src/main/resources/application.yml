@@ -3,21 +3,28 @@ server:
 spring:
   liquibase:
     enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    drop-first: true
+    default-schema: public
   jpa:
     database: postgresql
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
   datasource:
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/rtkit_golos
-    url: jdbc:postgresql://localhost:5432/golosbd
+    #local
+    #    url: jdbc:postgresql://localhost:5432/rtkit_golos
+    #docker
+    url: jdbc:postgresql://postgresql:5432/golosbd
     username: test
     password: test
   rabbitmq:
+    #docker
     host: rabbitmq
+    #local
     #    host: localhost
     port: 5672
     username: admin
