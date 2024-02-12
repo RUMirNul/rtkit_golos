@@ -8,6 +8,12 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 45s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
     networks:
       backend: { aliases: [rabbitmq.backend] }
     restart: unless-stopped
@@ -26,6 +32,12 @@ services:
       - postgres-db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "test", "-U", "test" ]
+      interval: 45s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
     networks:
       backend: { aliases: [ postgres.backend ] }
     restart: unless-stopped
@@ -62,8 +74,10 @@ services:
       - "8080:8080"
     restart: unless-stopped
     depends_on:
-      - rabbitmq
-      - postgres
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/golosbd
       SPRING_RABBITMQ_HOST: rabbitmq
@@ -82,7 +96,8 @@ services:
       - "5050:5050"
     restart: always
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
     networks:
@@ -100,7 +115,8 @@ services:
       - "5060:5060"
     restart: always
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
     networks:
