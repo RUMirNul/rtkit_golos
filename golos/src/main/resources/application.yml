@@ -16,7 +16,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     #local
-    #    url: jdbc:postgresql://localhost:5432/rtkit_golos
+#    url: jdbc:postgresql://localhost:5432/rtkit_golos
     #docker
     url: jdbc:postgresql://postgresql:5432/golosbd
     username: test
@@ -25,7 +25,7 @@ spring:
     #docker
     host: rabbitmq
     #local
-    #    host: localhost
+#    host: localhost
     port: 5672
     username: admin
     password: admin
