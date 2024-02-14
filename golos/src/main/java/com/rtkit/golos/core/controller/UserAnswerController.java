@@ -23,7 +23,7 @@ public class UserAnswerController {
 
     @GetMapping("/question/{pqid}/submit/{rid}")
     public UserAnswerDto getUserAnswer(@PathVariable("pqid") Integer pollQuestionId, @PathVariable("rid") Integer resultId) {
-        log.info("Запрос на получение ответа пользователя: pollQuestionId = {}, resultId = {}",pollQuestionId, resultId);
+        log.info("Запрос на получение ответа пользователя: pollQuestionId = {}, resultId = {}", pollQuestionId, resultId);
 
         return userAnswerService.getUserAnswer(resultId, pollQuestionId);
     }
@@ -37,7 +37,7 @@ public class UserAnswerController {
 
     @DeleteMapping("/question/{pqid}/submit/{rid}")
     public void deleteUserAnswer(@PathVariable("pqid") Integer pollQuestionId, @PathVariable("rid") Integer resultId) {
-        log.info("Запрос удаления ответа пользователя: pollQuestionId = {}, resultId = {}",pollQuestionId, resultId);
+        log.info("Запрос удаления ответа пользователя: pollQuestionId = {}, resultId = {}", pollQuestionId, resultId);
 
         userAnswerService.deleteUserAnswer(resultId, pollQuestionId);
     }

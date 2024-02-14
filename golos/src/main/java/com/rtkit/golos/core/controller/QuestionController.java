@@ -2,7 +2,6 @@ package com.rtkit.golos.core.controller;
 
 
 import com.rtkit.golos.core.dto.PollQuestionDto;
-import com.rtkit.golos.core.dto.QuestionDto;
 import com.rtkit.golos.core.mapper.QuestionMapper;
 import com.rtkit.golos.core.service.QuestionService;
 import com.rtkit.golos.core.web.request.AddPollQuestionRequest;
@@ -19,13 +18,6 @@ public class QuestionController {
 
     @PostMapping
     public PollQuestionDto createQuestion(@RequestBody AddPollQuestionRequest request) {
-//        PollQuestionDto pollQuestionDto = new PollQuestionDto();
-//        pollQuestionDto.setPollId(request.getPollId());
-//        QuestionDto questionDto = new QuestionDto();
-//        questionDto.setType(request.getQuestion().getType());
-//        questionDto.setText(request.getQuestion().getText());
-//        questionDto.setQuestionOrder(request.getQuestion().getQuestionOrder());
-//        pollQuestionDto.setQuestion(questionDto);
 
         PollQuestionDto pqd = questionMapper.toPollQuestionDto(request);
         return questionService.addQuestion(pqd);

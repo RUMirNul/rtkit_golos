@@ -1,52 +1,11 @@
 package com.rtkit.golos.core.service;
 
-import com.rtkit.golos.core.access.AnswerRepository;
 import com.rtkit.golos.core.dto.AnswerDto;
 import com.rtkit.golos.core.entity.Answer;
-import com.rtkit.golos.core.exception.NotFoundException;
-import com.rtkit.golos.core.mapper.AnswerMapper;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@AllArgsConstructor
-@Slf4j
-public class AnswerService {
-    private AnswerRepository answerRepository;
-    private AnswerMapper answerMapper;
+public interface AnswerService {
+    Answer saveAnswer(AnswerDto answerDto);
+    AnswerDto getAnswer(int id);
 
-    @Transactional
-    public Answer saveAnswer(AnswerDto answerDto) {
-        log.info("Запрос сохранения нового ответа на вопрос: {}", answerDto);
-
-        Answer answerEntity = answerMapper.toEntity(answerDto);
-        log.info("Сопоставленный объект Answer: {}", answerEntity);
-
-        Answer savedAnswer = answerRepository.save(answerEntity);
-        log.info("Сохраненный ответ в БД: {}", savedAnswer);
-
-        return savedAnswer;
-    }
-
-    public AnswerDto getAnswer(int id) {
-        log.info("Запрос получения ответа по id = {}", id);
-
-        Answer foundAnswer = answerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Ответ с id = %d не найден.".formatted(id)));
-        log.info("Найденный ответ: {}", foundAnswer);
-
-        AnswerDto foundAnswerDto = answerMapper.toDto(foundAnswer);
-        log.info("Сопоставленный объект AnswerDto: {}", foundAnswerDto);
-
-        return foundAnswerDto;
-    }
-
-    public void deleteAnswer(int id) {
-        log.info("Запрос удаления вопроса с id = {}", id);
-
-        answerRepository.deleteById(id);
-    }
-
+    void deleteAnswer(int id);
 }
