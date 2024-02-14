@@ -1,15 +1,16 @@
 package com.rtkit.golos.core.service.implementation;
 
 import com.rtkit.golos.core.access.UserRepo;
-import com.rtkit.golos.core.service.UserService;
-import com.rtkit.golos.core.web.request.AddUserRequest;
 import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.entity.GolosUser;
 import com.rtkit.golos.core.entity.UserRole;
 import com.rtkit.golos.core.exception.NotFoundException;
 import com.rtkit.golos.core.mapper.UserMapper;
+import com.rtkit.golos.core.service.UserService;
+import com.rtkit.golos.core.web.request.AddUserRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto getUserById(Integer userId) {
@@ -47,6 +49,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto addUser(AddUserRequest newUser) {
         GolosUser createdUser = userMapper.toEntity(newUser);
+        createdUser.setPassHash(passwordEncoder.encode(createdUser.getPassHash()));
         GolosUser savedUser = userRepo.saveAndFlush(createdUser);
         log.info("Сохраненная сущность GolosUser: {}", savedUser);
 
@@ -71,5 +74,14 @@ public class UserServiceImpl implements UserService {
         log.info("Сопоставленный объект UserDto: {}", updatedUserDto);
 
         return updatedUserDto;
+    }
+
+    @Override
+    public UserDto getUserByEmail(String email) {
+        GolosUser user = userRepo.findByEmail(email);
+        UserDto userDto = userMapper.toDto(user);
+        log.info("Найденный результат: {}", userDto);
+
+        return userDto;
     }
 }

@@ -15,4 +15,5 @@ public interface UserService {
     UserDto addUser(AddUserRequest newUser);
 
     UserDto updateUserRole(Integer userId, String role);
+    UserDto getUserByEmail(String email);
 }

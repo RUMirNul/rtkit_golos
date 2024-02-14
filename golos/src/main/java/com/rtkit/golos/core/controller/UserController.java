@@ -1,13 +1,13 @@
 package com.rtkit.golos.core.controller;
 
 import com.rtkit.golos.core.dto.PollDtoList;
+import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.dto.UserPollResultDto;
 import com.rtkit.golos.core.service.PollService;
 import com.rtkit.golos.core.service.PublishService;
 import com.rtkit.golos.core.service.UserPollResultService;
 import com.rtkit.golos.core.service.UserService;
 import com.rtkit.golos.core.web.request.AddUserRequest;
-import com.rtkit.golos.core.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,9 +40,9 @@ public class UserController {
                     @ApiResponse(responseCode = "200",
                             description = "Информация о пользователе.",
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = UserDto.class)))
+                                    schema = @Schema(implementation = UserDto.class)))
             })
-    public ResponseEntity<?> getUserById(@PathVariable("userId") int userId){
+    public ResponseEntity<?> getUserById(@PathVariable("userId") int userId) {
         log.info("Запрос на получение опроса по id: {}", userId);
 
         UserDto userDto = userService.getUserById(userId);
@@ -58,9 +58,9 @@ public class UserController {
                     @ApiResponse(responseCode = "200",
                             description = "Информация об опросах пользователя.",
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = PollDtoList.class)))
+                                    schema = @Schema(implementation = PollDtoList.class)))
             })
-    public ResponseEntity<?> getPollsByUserId(@PathVariable("userId") int userId){
+    public ResponseEntity<?> getPollsByUserId(@PathVariable("userId") int userId) {
         log.info("Запрос на получение опроса по id: {}", userId);
 
         PollDtoList pollDtoList = new PollDtoList(pollService.getPollByUserId(userId));
@@ -78,7 +78,7 @@ public class UserController {
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     array = @ArraySchema(schema = @Schema(implementation = PollDtoList.class))))
             })
-    public ResponseEntity<?> getParticipationByUserId(@PathVariable("userId") int userId){
+    public ResponseEntity<?> getParticipationByUserId(@PathVariable("userId") int userId) {
         log.info("Запрос на получение пройденных опроса по id: {}", userId);
 
         List<UserPollResultDto> userPollResultDto = userPollResultService.getParticipationByUserId(userId);
@@ -94,9 +94,9 @@ public class UserController {
                     @ApiResponse(responseCode = "200",
                             description = "Список пользователь.",
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            array = @ArraySchema(schema = @Schema(implementation = UserDto.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class))))
             })
-    public ResponseEntity<?> getAllUsers(){
+    public ResponseEntity<?> getAllUsers() {
         log.info("Запрос на получение пользователей");
 
         List<UserDto> userDtoList = userService.getAllUsers();
@@ -112,18 +112,16 @@ public class UserController {
                     @ApiResponse(responseCode = "200",
                             description = "Информация о созданном пользователе.",
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = UserDto.class)))
+                                    schema = @Schema(implementation = UserDto.class)))
             })
     public ResponseEntity<?> addUser(@RequestBody AddUserRequest request) {
         log.info("Запрос на добавление пользователя: {}", request);
-
         UserDto userDto = userService.addUser(request);
         log.info("Полученный пользователей: {}", userDto);
 
-        if (userDto != null)
-        {
+        if (userDto != null) {
             log.info("Отправка письма регистрации");
-           // publishService.publishRegisterMessage(userDto);
+            publishService.publishRegisterMessage(userDto);
         }
 
         return ResponseEntity.ok(userDto);
