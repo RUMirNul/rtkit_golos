@@ -123,7 +123,7 @@ public class UserController {
         if (userDto != null)
         {
             log.info("Отправка письма регистрации");
-            publishService.publishRegisterMessage(userDto);
+           // publishService.publishRegisterMessage(userDto);
         }
 
         return ResponseEntity.ok(userDto);
