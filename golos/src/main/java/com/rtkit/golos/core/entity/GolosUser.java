@@ -20,7 +20,7 @@ public class GolosUser {
     @Column(name = "lastname", nullable = false, length = 30)
     private String lastName;
 
-    @Column(name = "email", nullable = false, length = 320)
+    @Column(name = "email", unique = true, nullable = false, length = 320)
     private String email;
 
     @Column(name = "passhash", nullable = false, length = 320)
