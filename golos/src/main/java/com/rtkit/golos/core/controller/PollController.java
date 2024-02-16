@@ -50,8 +50,7 @@ public class PollController {
         return ResponseEntity.ok(pollStatusDto);
     }
 
-    @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("/{pollId}")
+    @GetMapping(path ="/{pollId}", produces=MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Получение опроса.",
             description = "Возвращает опрос с указанным id.",
             responses = {

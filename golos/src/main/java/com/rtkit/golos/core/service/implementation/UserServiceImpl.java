@@ -5,6 +5,7 @@ import com.rtkit.golos.core.dto.UserDto;
 import com.rtkit.golos.core.entity.GolosUser;
 import com.rtkit.golos.core.entity.UserRole;
 import com.rtkit.golos.core.exception.NotFoundException;
+import com.rtkit.golos.core.exception.UserAlreadyExistException;
 import com.rtkit.golos.core.mapper.UserMapper;
 import com.rtkit.golos.core.service.UserService;
 import com.rtkit.golos.core.web.request.AddUserRequest;
@@ -48,6 +49,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto addUser(AddUserRequest newUser) {
+        if (emailExists(newUser.getEmail())) {
+            throw new UserAlreadyExistException("Уже есть зарегестрированный пользователь с там email: " + newUser.getEmail());
+        }
         GolosUser createdUser = userMapper.toEntity(newUser);
         createdUser.setPassHash(passwordEncoder.encode(createdUser.getPassHash()));
         GolosUser savedUser = userRepo.saveAndFlush(createdUser);
@@ -83,5 +87,9 @@ public class UserServiceImpl implements UserService {
         log.info("Найденный результат: {}", userDto);
 
         return userDto;
+    }
+
+    private boolean emailExists(String email) {
+        return userRepo.findByEmail(email) != null;
     }
 }

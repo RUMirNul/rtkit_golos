@@ -1,6 +1,7 @@
 package com.rtkit.golos.core.handler;
 
 import com.rtkit.golos.core.exception.NotFoundException;
+import com.rtkit.golos.core.exception.UserAlreadyExistException;
 import com.rtkit.golos.core.web.response.BaseErrorWebResponse;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,18 @@ public class ControllerExceptionHandler {
     public ResponseEntity<BaseErrorWebResponse> handleNotFoundException(@NonNull final NotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BaseErrorWebResponse(createErrorMessage(e)));
+    }
+
+    /**
+     * Обработчик исключения UserAlreadyExistException. Возвращает ответ с HTTP-статусом CONFLICT (409).
+     *
+     * @param e Исключение NotFoundException.
+     * @return ResponseEntity с телом ответа в виде BaseWebResponse.
+     */
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<BaseErrorWebResponse> handleUserAlreadyExistException(@NonNull final UserAlreadyExistException e) {
+        log.error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new BaseErrorWebResponse(createErrorMessage(e)));
     }
 
 

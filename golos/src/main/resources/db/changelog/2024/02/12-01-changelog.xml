@@ -39,7 +39,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="VARCHAR(320)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="passhash" type="VARCHAR(320)">
                 <constraints nullable="false"/>
