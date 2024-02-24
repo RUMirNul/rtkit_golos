@@ -41,11 +41,11 @@ public class EmailServiceImpl implements EmailService {
 
     @RabbitListener(queues = "statMail")
     public void onStatMessage(final FileDto fileDto) {
-        log.info("Запрос отправки статистики: {} ", fileDto);
+        log.info("Запрос отправки статистики на электронную почту: {} ", fileDto.getEmail());
         final String subject = "Статистика по опросу: " + 1;
         final String content = "Poll link:";
         DataSource fds = new ByteArrayDataSource(fileDto.getExcelFile(), "application/vnd.ms-excel");
-        setEmail(createEmail("anthonymakushkin@yandex.ru", subject, content, fds));
+        setEmail(createEmail(fileDto.getEmail(), subject, content, fds));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class EmailServiceImpl implements EmailService {
     public void setEmail(MimeMessagePreparator mimeMessage) {
         log.info("Подготовка к отправке письма.");
         try {
-//            mailSender.send(mimeMessage);
+            mailSender.send(mimeMessage);
         } catch (MailException e) {
             log.error("Ошибка отправки письма.");
             throw new AmqpRejectAndDontRequeueException(e);

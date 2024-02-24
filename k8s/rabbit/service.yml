@@ -7,14 +7,12 @@ metadata:
     app-label: rabbitmq-3management
 spec:
   ports:
-    - port: 15672
-      name: http
-      protocol: TCP
-      targetPort: 15672
-      nodePort: 30533
-    - port: 5672
-      name: amqp
+    - name: amqp
+      port: 5672
       targetPort: 5672
+    - name: plaintext
+      port: 15672
+      targetPort: 15672
   selector:
-    app-label: grabbitmq-3management
+    app-label: rabbitmq-3management
   type: LoadBalancer

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golos-notify-v1
+  labels:
+    app-label: golos-notify-v1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app-label: golos-notify-v1
+  template:
+    metadata:
+      labels:
+        app-label: golos-notify-v1
+    spec:
+      containers:
+        - env:
+            - name: SPRING_RABBITMQ_HOST
+              value: 158.160.150.41
+          name: golos-notify-v1
+          image: cr.yandex/crpsdee4cj9f5r7k87ic/golos-notify:v1

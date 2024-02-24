@@ -19,11 +19,15 @@ spec:
       - name: golos-v1
         image: cr.yandex/crpsdee4cj9f5r7k87ic/golos:v1
         env:
-        - name: PORT
-          value: "6432"
-        - name: DATABASE_HOST
-          value: "rc1a-7hralt7zq1xy378o.mdb.yandexcloud.net"
-        - name: USER
-          value: "dbuser_rit"
-        - name: PASSWORD
-          value: "dbuser_rit"          
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          - name: PORT
+            value: "6432"
+          - name: DATABASE_HOST
+            value: "rc1a-7hralt7zq1xy378o.mdb.yandexcloud.net"
+          - name: USER
+            value: "golos"
+          - name: PASSWORD
+            value: "golosgolos"
+          - name: SPRING_RABBITMQ_HOST
+            value: 158.160.150.41

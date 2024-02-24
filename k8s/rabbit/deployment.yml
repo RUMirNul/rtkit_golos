@@ -16,10 +16,13 @@ spec:
         app-label: rabbitmq-3management
     spec:
       containers:
-      - name: rabbitmq-3management
-        image: cr.yandex/crpsdee4cj9f5r7k87ic/rabbitmq:3-management
-        env:
-        - name: RABBITMQ_DEFAULT_USER
-          value: "admin"
-        - name: RABBITMQ_DEFAULT_PASS
-          value: "admin"
+        - env:
+          - name: RABBITMQ_DEFAULT_USER
+            value: "admin"
+          - name: RABBITMQ_DEFAULT_PASS
+            value: "admin"
+          name: rabbitmq-3management
+          image: cr.yandex/crpsdee4cj9f5r7k87ic/rabbitmq:3-management
+          ports:
+            - containerPort: 15672
+            - containerPort: 5672

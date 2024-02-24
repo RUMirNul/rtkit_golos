@@ -19,7 +19,8 @@ spring:
     username: golos
     password: golosgolos
   rabbitmq:
-    host: rabbitmq
+    host: 158.160.150.41
+#    host: rabbitmq
     port: 5672
     username: admin
     password: admin

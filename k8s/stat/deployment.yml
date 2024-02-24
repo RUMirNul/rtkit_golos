@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golos-stat-v1
+  labels:
+    app-label: golos-stat-v1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app-label: golos-stat-v1
+  template:
+    metadata:
+      labels:
+        app-label: golos-stat-v1
+    spec:
+      containers:
+        - env:
+            - name: SPRING_RABBITMQ_HOST
+              value: 158.160.150.41
+          name: statistics-v1
+          image: cr.yandex/crpsdee4cj9f5r7k87ic/golos-stat:v1

@@ -78,7 +78,8 @@ services:
       rabbitmq:
         condition: service_healthy
     environment:
-      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_HOST: 158.160.150.41
+#      SPRING_PROFILES_ACTIVE: prod
     networks:
       backend: { aliases: [ notifier.backend ] }
 
@@ -96,7 +97,7 @@ services:
       rabbitmq:
         condition: service_healthy
     environment:
-      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_HOST: 158.160.150.41
     networks:
       backend: { aliases: [ statistics.backend ] }
 
