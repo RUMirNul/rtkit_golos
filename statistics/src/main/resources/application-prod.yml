@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE} #spring.profiles.active#
   rabbitmq:
     host: rabbitmq
     username: admin

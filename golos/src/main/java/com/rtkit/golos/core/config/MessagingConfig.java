@@ -61,6 +61,16 @@ public class MessagingConfig {
     }
 
     @Bean
+    public Queue statMailMessageQueue() {
+        return new Queue("statMail", false);
+    }
+
+    @Bean
+    public Binding bindingStatMailQueue(@Qualifier("statMailMessageQueue") Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("statMail");
+    }
+
+    @Bean
     public Jackson2JsonMessageConverter produceJackson2MessageConverter() {
         return new Jackson2JsonMessageConverter();
     }

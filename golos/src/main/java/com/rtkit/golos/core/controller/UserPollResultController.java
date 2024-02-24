@@ -1,9 +1,11 @@
 package com.rtkit.golos.core.controller;
 
-import com.rtkit.golos.core.dto.StatDto;
 import com.rtkit.golos.core.dto.UserPollResultDto;
+import com.rtkit.golos.core.service.PollService;
 import com.rtkit.golos.core.service.PublishService;
 import com.rtkit.golos.core.service.UserPollResultService;
+import com.rtkit.golos.core.service.UserService;
+import com.rtkit.golos.core.service.implementation.StatisticsService;
 import com.rtkit.golos.core.web.request.AddUserPollResultRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,9 +14,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.StatResultPoll;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -24,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserPollResultController {
     private final UserPollResultService userPollResultService;
     private final PublishService publishService;
+    private final StatisticsService statService;
 
     @GetMapping("/{resultId}")
     @Operation(summary = "Получение результата опроса пользователя.",
@@ -90,11 +97,9 @@ public class UserPollResultController {
                                     schema = @Schema(implementation = UserPollResultDto.class)))
             })
     public void getStatistics(@PathVariable("pollId") int pollId) {
-        log.info("Запрос на изменение статистики по результатам опроса с id: {}", pollId);
-
-        StatDto statDto = userPollResultService.getStatistics(pollId);
-        log.info("Сформированная статистика: {}", statDto);
-
-        publishService.publishStatMessage(statDto);
+        log.info("Запрос на получение статистики по результатам опроса с id: {}", pollId);
+        List<StatResultPoll> resultPollDto = statService.formStatistics(pollId);
+        log.info("Сформированная статистика: {}", resultPollDto);
+        publishService.publishStatMessage(SecurityContextHolder.getContext().getAuthentication().getName(), resultPollDto);
     }
 }

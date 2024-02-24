@@ -8,10 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @Schema(description = "Пользователь.")
 public class UserDto {
+    @NotNull(message = "Поле id не должно быть null.")
+    @Schema(description = "Уникальный идентификатор пользователя.")
+    private int id;
+
     @NotNull(message = "Поле firstName не должно быть null.")
     @Length(max = 30, message = "Максимальная длина 30 символов.")
     @Schema(description = "Имя пользователя.")

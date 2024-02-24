@@ -1,9 +1,11 @@
 package com.rtkit.golos.core.service.implementation;
 
 import com.rtkit.golos.core.access.InviteRepo;
+import com.rtkit.golos.core.dto.PollDto;
 import com.rtkit.golos.core.exception.NotFoundException;
 import com.rtkit.golos.core.mapper.PollMapperUtil;
 import com.rtkit.golos.core.service.InviteService;
+import com.rtkit.golos.core.service.PollService;
 import com.rtkit.golos.core.web.request.AddInviteRequest;
 import com.rtkit.golos.core.dto.InviteDto;
 import com.rtkit.golos.core.entity.Invite;
@@ -20,12 +22,14 @@ public class InviteServiceImpl implements InviteService {
     private InviteRepo inviteRepo;
     private InviteMapper inviteMapper;
     private PollMapperUtil pollMapperUtil;
+    private PollService pollService;
 
     @Override
     @Transactional
     public InviteDto addInvite(Integer pollId, AddInviteRequest inviteDto) {
         Invite newInvite = inviteMapper.toEntity(inviteDto);
-        newInvite.setPollId(pollMapperUtil.fromId(pollId));
+        PollDto poll = pollService.getPollById(newInvite.getPollId().getId());
+        newInvite.setPollId(pollMapperUtil.fromId(poll.getId()));
         newInvite.setUses(0);
         Invite savedInvite = inviteRepo.save(newInvite);
         InviteDto createdInviteDto = new InviteDto(savedInvite);

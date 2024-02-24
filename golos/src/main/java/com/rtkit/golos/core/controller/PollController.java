@@ -7,7 +7,6 @@ import com.rtkit.golos.core.service.PublishService;
 import com.rtkit.golos.core.web.request.AddInviteRequest;
 import com.rtkit.golos.core.web.request.AddPollRequest;
 import com.rtkit.golos.core.web.request.UpdatePollRequest;
-import com.rtkit.golos.core.service.implementation.PublishServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +24,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:5173")
 @Tag(name = "Опросы.", description = "Методы для работы с опросами.")
 @RequestMapping("/poll")
 public class PollController {
@@ -41,6 +40,7 @@ public class PollController {
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = PollStatusDto.class)))
             })
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllStatues() {
         log.info("Запрос получения списка статусов опросов");
 
@@ -143,6 +143,7 @@ public class PollController {
     }
 
     @DeleteMapping("/{pollId}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Удаление опроса.",
             description = "Изменение статуса опроса.",
             responses = {

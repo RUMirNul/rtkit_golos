@@ -1,6 +1,7 @@
 package com.rtkit.golos.core.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class GolosUser {
     private String lastName;
 
     @Column(name = "email", unique = true, nullable = false, length = 320)
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @Column(name = "passhash", nullable = false, length = 320)

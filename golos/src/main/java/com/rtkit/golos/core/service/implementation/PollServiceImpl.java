@@ -50,6 +50,7 @@ public class PollServiceImpl implements PollService {
     @Override
     public List<PollDto> getAllPolls() {
         List<PollDto> pollDtoList = pollRepo.findAll().stream()
+                .filter(poll -> poll.getStatus() == PollStatus.PUBLIC)
                 .map(PollDto::new).toList();
         log.info("Найденный результат: {}", pollDtoList);
 
@@ -73,6 +74,7 @@ public class PollServiceImpl implements PollService {
     @Transactional
     public PollDto addPoll(AddPollRequest createPollDto) {
         PollDto requestDto = pollMapper.toDto(createPollDto);
+        requestDto.setStatus(PollStatus.DRAFT);
         Poll savedPoll = pollMapper.toEntity(requestDto);
         log.info("Сопоставленный объект Poll: {}", savedPoll);
 

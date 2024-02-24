@@ -25,9 +25,4 @@ public class AddPollRequest {
     @Length(max = 300, message = "Максимальная длина 300 символов.")
     @Schema(description = "Описание опроса.")
     private String description;
-
-    @NotNull(message = "Поле status не должно быть null.")
-    @Length(max = 255, message = "Максимальная длина 255 символов.")
-    @Schema(description = "Статус опроса.")
-    private PollStatus status;
 }

@@ -62,17 +62,20 @@ public class QuestionServiceImpl implements QuestionService {
 
         Question question = questionMapper.toQuestion(pollQuestionDto.getQuestion());
         Question savedQuestion = questionRepository.save(question);
+        log.info("Сохраненный Question: {}", savedQuestion);
 
         PollQuestion pollQuestion = new PollQuestion();
         pollQuestion.setPollId(pollRepo.getReferenceById(pollQuestionDto.getPollId()));
         pollQuestion.setQuestionId(savedQuestion);
-        pollQuestion.setOrderInd((short) 0);
+        pollQuestion.setOrderInd(pollQuestionDto.getQuestion().getQuestionOrder().shortValue());
         PollQuestion savedPollQuestion = pollQuestionRepository.save(pollQuestion);
+        log.info("Сохраненный PollQuestion: {}", savedPollQuestion);
 
         PollQuestionDto savedPollQuestionDto = new PollQuestionDto();
         savedPollQuestionDto.setQuestion(questionMapper.toQuestionDto(savedQuestion));
         savedPollQuestionDto.setPollId(pollQuestionDto.getPollId());
         savedPollQuestionDto.setId(savedPollQuestion.getId());
+        log.info("Сопоставленный объект PollQuestionDto: {}", savedPollQuestionDto);
 
         applicationEventPublisher.publishEvent(new NewQuestionCreatedEvent(savedQuestion.getId()));
 

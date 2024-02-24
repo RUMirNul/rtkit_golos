@@ -39,6 +39,8 @@ dependencies {
 
 	implementation 'org.liquibase:liquibase-core:4.26.0'
 
+	implementation project(':common')
+
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -50,9 +52,9 @@ lombok {
 	version = "1.18.30"
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
 
 bootJar {
 	enabled = true

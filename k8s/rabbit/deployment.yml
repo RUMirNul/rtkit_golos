@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-3management
+  labels:
+    app-label: rabbitmq-3management
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app-label: rabbitmq-3management
+  template:
+    metadata:
+      labels:
+        app-label: rabbitmq-3management
+    spec:
+      containers:
+      - name: rabbitmq-3management
+        image: cr.yandex/crpsdee4cj9f5r7k87ic/rabbitmq:3-management
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: "admin"
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "admin"

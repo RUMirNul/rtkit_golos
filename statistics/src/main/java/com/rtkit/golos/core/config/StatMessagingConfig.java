@@ -1,4 +1,4 @@
-package com.rtkit.golos.core;
+package com.rtkit.golos.core.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.Binding;

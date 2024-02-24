@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -88,6 +89,7 @@ public class UserController {
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Получение всех пользователь.",
             description = "Получение информации о всех пользователях.",
             responses = {
@@ -128,6 +130,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}/role/{userRole}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Изменение роли пользователя.",
             description = "Обновление роли пользователя пользователя.",
             responses = {

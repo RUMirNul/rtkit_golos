@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: golos-v1
+  labels:
+    app-label: golos-v1
+spec:
+  ports:
+    - port: 8080
+      name: plaintext
+      targetPort: 8080
+  selector:
+    app-label: golos-v1
+  type: LoadBalancer

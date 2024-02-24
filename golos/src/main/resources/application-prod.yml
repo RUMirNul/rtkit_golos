@@ -1,11 +1,8 @@
 server:
   port: 8080
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE} #spring.profiles.active#
   liquibase:
     enabled: true
-#    drop-first: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
     default-schema: public
   jpa:
@@ -18,9 +15,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres.backend:6432/golosbd
-    username: test
-    password: test
+    url: jdbc:postgresql://rc1a-7hralt7zq1xy378o.mdb.yandexcloud.net:6432/golos
+    username: golos
+    password: golosgolos
   rabbitmq:
     host: rabbitmq
     port: 5672

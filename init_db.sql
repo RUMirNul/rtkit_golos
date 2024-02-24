@@ -1,3 +1,6 @@
-CREATE ROLE test WITH LOGIN SUPERUSER PASSWORD 'test';
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
-create database golosbd;
+CREATE USER test WITH ENCRYPTED PASSWORD 'test';
+
+CREATE DATABASE golosbd OWNER test;

@@ -14,14 +14,8 @@ bootJar {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
 	implementation 'com.fasterxml.jackson.core:jackson-annotations'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
@@ -31,17 +25,8 @@ dependencies {
 	implementation 'ch.qos.logback:logback-classic'
 	implementation 'ch.qos.logback:logback-core'
 
-	runtimeOnly 'org.postgresql:postgresql'
+	implementation project(':common')
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
-	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-}
-
-lombok {
-	version = "1.18.30"
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }

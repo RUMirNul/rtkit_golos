@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: rabbitmq-3management
+  labels:
+    app-label: rabbitmq-3management
+spec:
+  ports:
+    - port: 15672
+      name: http
+      protocol: TCP
+      targetPort: 15672
+      nodePort: 30533
+    - port: 5672
+      name: amqp
+      targetPort: 5672
+  selector:
+    app-label: grabbitmq-3management
+  type: LoadBalancer

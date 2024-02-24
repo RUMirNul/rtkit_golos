@@ -23,50 +23,31 @@ services:
     image: postgres:latest
     environment:
       netstat: host
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: padmin
-      POSTGRES_DB: golosbd
+      POSTGRES_USER: golos
+      POSTGRES_PASSWORD: golosgolos
+      POSTGRES_DB: golos
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
       - postgres-db-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "6432:5432"
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "test", "-U", "test" ]
+      test: [ "CMD", "pg_isready", "-q", "-d", "golosbd", "-U", "postgres" ]
       interval: 45s
-      timeout: 10s
+      timeout: 30s
       retries: 10
-      start_period: 20s
+      start_period: 30s
     networks:
       backend: { aliases: [ postgres.backend ] }
-    restart: unless-stopped
-
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4:latest
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=test@test.com
-      - PGADMIN_DEFAULT_PASSWORD=test
-      - PGADMIN_CONFIG_SERVER_MODE=False
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    ports:
-      - "5040:80"
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1G
-    networks:
-      backend: { aliases: [ pgadmin.backend ] }
+    restart: always
 
   golos:
     image: golos:latest
     container_name: golos
     build:
       context: ./golos
+      dockerfile: Dockerfile
       args:
         APP_NAME: golos
         APP_VERSION: 0.0.1
@@ -79,8 +60,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/golosbd
-      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_PROFILES_ACTIVE: prod
     networks:
       backend: { aliases: [ golos.backend ] }
 
@@ -88,12 +68,11 @@ services:
     image: notifier:latest
     container_name: notifier
     build:
+      dockerfile: Dockerfile
       context: ./notifier
       args:
         APP_NAME: notifier
         APP_VERSION: 0.0.1
-    ports:
-      - "5050:5050"
     restart: always
     depends_on:
       rabbitmq:
@@ -107,12 +86,11 @@ services:
     image: statistics:latest
     container_name: statistics
     build:
+      dockerfile: Dockerfile
       context: ./statistics
       args:
         APP_NAME: statistics
         APP_VERSION: 0.0.1
-    ports:
-      - "5060:5060"
     restart: always
     depends_on:
       rabbitmq:
@@ -128,4 +106,3 @@ networks:
 
 volumes:
   postgres-db-data:
-  pgadmin-data:
