@@ -36,6 +36,8 @@ public class QuestionPageController {
         PollQuestionDto pollQuestionDto = pollQuestionDtos.get(questId - 1);
         model.addAttribute("pollQuestionDto", pollQuestionDto);
 
+        model.addAttribute("questionIndex", pollQuestionDtos.indexOf(pollQuestionDto) + 1);
+
         QuestionDto question = pollQuestionDto.getQuestion();
         model.addAttribute("questionDTO", question);
 

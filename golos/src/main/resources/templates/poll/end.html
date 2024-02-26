@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Страница запуска опроса</title>
+    <title>Конец опроса</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,36 +17,24 @@
             margin-bottom: 5px;
         }
 
-        body {
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
         .navbar {
             background-color: #0f1727;
         }
 
-        .btn-primary {
+        .btn {
             background-color: #7700ff !important;
             border-color: #7700ff;
         }
 
-        .btn-secondary {
-            background-color: #7700ff !important;
-            border-color: #7700ff;
+        .container h5 {
+            font-size: 20px;
+            padding-top: 25px;
+            margin-bottom: 25px;
         }
     </style>
-
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" th:href="@{/}">
         <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
@@ -73,26 +61,13 @@
             </li>
         </ul>
     </div>
+
 </nav>
 
-
-<div class="container">
-    <div class="jumbotron">
-        <h1 th:text="${poll.getName()}"> name </h1>
-        <p>Описание опроса: <span th:text="${poll.getDescription()}"> description </span></p>
-        <p>Дата добавления: <span th:text="${poll.getCreatedDt()}"> date </span></p>
-
-        <a th:if="${#lists.isEmpty(pollquestion)}">
-            <h6> Опрос ещё пустой </h6>
-        </a>
-
-        <a th:if="${!#lists.isEmpty(pollquestion)}"
-           th:href="@{/polls/{pollid}/questions/1(pollid=${id})}"
-           class="btn btn-primary">Начать опрос
-        </a>
-    </div>
-    <a th:href="@{/polls}"
-       class="btn btn-secondary back-btn">← Вернуться к списку опросов</a>
+<div class="container mt-5">
+    <h1>Поздравляем!</h1>
+    <h5>Вы успешно прошли опрос <span th:text="${poll.getName()}"> </span>.</h5>
+    <a th:href="@{/polls}" class="btn btn-primary">Вернуться к опросам</a>
 </div>
 
 </body>
