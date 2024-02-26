@@ -101,7 +101,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="question">Вопрос <span th:text="${pollQuestionDto.getQuestion().getQuestionOrder()}"> id </span>
+            <h2 class="question">Вопрос <span th:text="${questionIndex}"> id </span>
             </h2>
             <h5 th:text="${questionDTO.getText()}" class="questionText">Текст вопроса</h5>
 
@@ -139,10 +139,10 @@
             </div>
 
 
-            <a th:href="${questionDTO.getId() == 1}  ? '/polls/' + ${pollid} :
-                        '/polls/' + ${pollid} + '/questions/' + ${questionDTO.getId() + 1}" class="btn btn-primary mt-3"> Назад </a>
-            <a th:href="${questionDTO.getId() == (pollQuestionDtos.size() - 1) } ? '/polls/' + ${pollid} + '/end' :
-                        '/polls/'  + ${pollid} + '/questions/' + ${questionDTO.getId() + 1}" class="btn btn-primary mt-3">Далее </a>
+            <a th:href="${pollQuestionDtos.get(0) == pollQuestionDto}  ? '/polls/' + ${pollid} :
+                        '/polls/' + ${pollid} + '/questions/' + ${questionIndex - 1}" class="btn btn-primary mt-3"> Назад </a>
+            <a th:href="${pollQuestionDtos.get(pollQuestionDtos.size() - 1) == pollQuestionDto} ? '/polls/' + ${pollid} + '/end' :
+                        '/polls/' + ${pollid} + '/questions/' + ${questionIndex + 1}" class="btn btn-primary mt-3"> Далее </a>
         </div>
     </div>
 </div>

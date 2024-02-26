@@ -87,7 +87,7 @@
         </a>
 
         <a th:if="${!#lists.isEmpty(pollquestion)}"
-           th:href="@{/polls/{pollid}/questions/{questid}(pollid=${id}, questid=${pollquestion.get(0).getQuestion().getId()})}"
+           th:href="@{/polls/{pollid}/questions/1(pollid=${id})}"
            class="btn btn-primary">Начать опрос
         </a>
     </div>

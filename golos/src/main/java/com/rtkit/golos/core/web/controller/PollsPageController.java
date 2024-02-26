@@ -64,7 +64,8 @@ public class PollsPageController {
     @GetMapping("/{pollid}/end")
     public String end(Model model,
                       @PathVariable("pollid") int id) {
-
+        PollDto pollDto = pollService.getPollById(id);
+        model.addAttribute("poll", pollDto);
 
         return "/poll/end";
     }
