@@ -1,6 +1,7 @@
 package com.rtkit.golos.core.web.controller;
 
 
+import com.rtkit.golos.core.dto.PollDto;
 import com.rtkit.golos.core.entity.GolosUser;
 import com.rtkit.golos.core.entity.Poll;
 import com.rtkit.golos.core.service.PollService;
@@ -46,7 +47,7 @@ public class PollsPageController {
 
     @GetMapping("/create")
     public String createPage(@ModelAttribute("poll") Poll poll) {
-        return "/poll/pollCreate";
+        return "/poll/new";
     }
 
     @PostMapping("/create")
@@ -55,9 +56,17 @@ public class PollsPageController {
         GolosUser user = userService.getGolosUserByEmail(email);
 
         newPoll.setAuthorId(user.getId());
-        pollService.addPoll(newPoll);
+        PollDto pollDto = pollService.addPoll(newPoll);
 
-        return "redirect:/polls";
+        return "redirect:/polls/" + pollDto.getId() + "/edit";
+    }
+
+    @GetMapping("/{pollid}/end")
+    public String end(Model model,
+                      @PathVariable("pollid") int id) {
+
+
+        return "/poll/end";
     }
 
     @GetMapping("/{id}/edit")
@@ -66,8 +75,7 @@ public class PollsPageController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@PathVariable("id") int id,
-                         @ModelAttribute("poll")UpdatePollRequest newPoll) {
+    public String update(@ModelAttribute("poll") UpdatePollRequest newPoll) {
 
         pollService.updatePollDto(newPoll);
         return "redirect:/people";

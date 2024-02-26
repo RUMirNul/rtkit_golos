@@ -48,11 +48,27 @@
             margin-top: 130px;
             text-align: center;
         }
+
+        .navbar {
+            background-color: #0f1727;
+        }
+
+        .btnStart {
+            font-size: 15px;
+            font-weight: bold;
+            background-color: #7700ff !important;
+            border-color: #7700ff;
+        }
+
+        .btn-success {
+            background-color: #7700ff !important;
+            border-color: #7700ff;
+        }
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" th:href="@{/}">
         <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
     </a>
@@ -90,7 +106,7 @@
             <h3 th:text="${poll.getName()}"></h3>
             <p th:text="${poll.getDescription()}"></p>
             <p>Дата создания: <span th:text="${poll.getCreatedDt()}"></span></p>
-            <p><a th:href="@{/polls/{id}(id=${poll.getId()})}" class="btn btn-primary">Пройти тест</a> </p>
+            <p><a th:href="@{/polls/{id}(id=${poll.getId()})}" class="btn btn-primary btnStart">Пройти тест</a> </p>
         </div>
     </div>
 

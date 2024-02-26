@@ -22,6 +22,8 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/v3/**", "/swagger-ui/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user", "POST")).anonymous()
                         .requestMatchers(new AntPathRequestMatcher("/poll/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/question/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/answer/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/polls/**")).permitAll()
                         .requestMatchers("/registration**").permitAll()
                         .requestMatchers("/images/**").permitAll()

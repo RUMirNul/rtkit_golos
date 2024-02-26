@@ -41,6 +41,12 @@
             margin-bottom: 20px;
         }
 
+        .jumbotron h2 {
+            font-size: 20px;
+            text-align: center;
+            padding-top: 75px;
+        }
+
         .jumbotron .btn {
             display: block;
             width: 50%;
@@ -48,12 +54,22 @@
             margin-bottom: 20px;
             margin-top: 100px;
         }
+
+        .navbar {
+            background-color: #0f1727;
+        }
+
+        .btn {
+            background-color: #7700ff !important;
+            border-color: #7700ff;
+        }
+
     </style>
 
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" th:href="@{/}">
         <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
     </a>
@@ -85,6 +101,7 @@
 
 <div class="jumbotron">
     <h1>Добро пожаловать!</h1>
+    <h2>На нашем сайте вы можете принять участие в интересных опросах и помочь собрать статистику для исследований!</h2>
 
     <a th:href="@{/polls}" class="btn btn-primary btn-lg">Перейти к опросам</a>
 </div>
