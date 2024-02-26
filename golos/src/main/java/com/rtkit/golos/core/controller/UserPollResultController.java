@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/poll/participation")
-@Tag(name = "Результаты опросы пользователя.", description = "Методы для работы с результами опроса пользователя.")
+@Tag(name = "Результаты опросов пользователя.", description = "Методы для работы с результами опроса пользователя.")
 public class UserPollResultController {
     private final UserPollResultService userPollResultService;
     private final PublishService publishService;

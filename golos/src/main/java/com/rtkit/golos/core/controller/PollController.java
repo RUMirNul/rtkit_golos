@@ -68,8 +68,8 @@ public class PollController {
         return ResponseEntity.ok(pollDto);
     }
 
-    @GetMapping("/")
-    @Operation(summary = "Получение всех опроса.",
+    @GetMapping
+    @Operation(summary = "Получение всех опросов.",
             description = "Возвращает список всех опроса.",
             responses = {
                     @ApiResponse(responseCode = "200",
