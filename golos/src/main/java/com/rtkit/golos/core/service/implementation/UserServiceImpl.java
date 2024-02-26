@@ -89,6 +89,15 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    @Override
+    public GolosUser getGolosUserByEmail(String email) {
+        GolosUser user = userRepo.findByEmail(email);
+
+        log.info("Найденный результат: {}", user);
+
+        return user;
+    }
+
     private boolean emailExists(String email) {
         return userRepo.findByEmail(email) != null;
     }

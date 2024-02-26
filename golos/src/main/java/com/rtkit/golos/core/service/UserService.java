@@ -1,6 +1,7 @@
 package com.rtkit.golos.core.service;
 
 import com.rtkit.golos.core.dto.UserDto;
+import com.rtkit.golos.core.entity.GolosUser;
 import com.rtkit.golos.core.web.request.AddUserRequest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,4 +17,6 @@ public interface UserService {
 
     UserDto updateUserRole(Integer userId, String role);
     UserDto getUserByEmail(String email);
+
+    GolosUser getGolosUserByEmail(String email);
 }

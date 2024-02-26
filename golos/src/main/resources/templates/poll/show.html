@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница запуска опроса</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css"></style>
+
+    <style>
+        .logo {
+            height: 40px;
+            margin-bottom: 5px;
+        }
+
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">
+        <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}"> Главная <span class="sr-only"></span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/polls}">Опросы</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/lk}">Личный кабинет</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}">Выход</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 th:text="${poll.getName()}"> name </h1>
+        <p>Описание опроса: <span th:text="${poll.getDescription()}"> description </span></p>
+        <p>Дата добавления: <span th:text="${poll.getCreatedDt()}"> date </span></p>
+
+        <a th:if="${#lists.isEmpty(pollquestion)}">
+            <h6> Опрос ещё пустой </h6>
+        </a>
+
+        <a th:if="${!#lists.isEmpty(pollquestion)}"
+           th:href="@{/polls/{pollid}/questions/{questid}(pollid=${id}, questid=${pollquestion.get(0).getQuestion().getId()})}"
+           class="btn btn-primary">Начать опрос
+        </a>
+    </div>
+    <a th:href="@{/polls}"
+       class="btn btn-secondary back-btn">← Вернуться к списку опросов</a>
+</div>
+
+</body>
+</html>

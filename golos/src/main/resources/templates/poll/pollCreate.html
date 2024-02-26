@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать опрос</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css"></style>
+
+    <style>
+        .logo {
+            height: 40px;
+            margin-bottom: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">
+        <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}"> Главная <span class="sr-only"></span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/polls}">Опросы</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/lk}">Личный кабинет</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}">Выход</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+<div class="container mt-4">
+    <h1>Создание опроса</h1>
+    <form id="surveyForm" th:action="@{/polls/create}" th:object="${poll}" method="post">
+
+        <div class="form-group">
+            <label for="title">Название:</label>
+            <input type="text" id="title" name="name" th:field="*{name}" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description" th:field="*{description}" required
+                      class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Статус:</label>
+            <select id="status" name="status" th:field="*{status}" class="form-control" required>
+                <option value="PUBLIC">PUBLIC</option>
+                <option value="PRIVATE">PRIVATE</option>
+                <option value="HIDDEN">HIDDEN</option>
+                <option value="CLOSED">CLOSED</option>
+                <option value="DRAFT">DRAFT</option>
+            </select>
+        </div>
+
+        <!--<button id="add-question-btn" class="add-question btn btn-primary mt-3">Добавить вопрос</button>-->
+
+        <div id="questions">
+
+        </div>
+
+
+        <button type="button" onclick="addQuestion()">Добавить вопрос</button>
+
+        <button type="submit" class="btn btn-success mt-3">Создать опрос</button>
+    </form>
+</div>
+
+
+<script>
+    function addQuestion() {
+        var questionType = prompt("Выберите тип вопроса (CHECKBOX, DROPBOX, MULTICHOICE, IMAGE):");
+        var questionHtml = '<label for="question">Тип вопроса:</label><br>';
+        var questionOptions = '';
+
+        if (questionType === 'CHECKBOX' || questionType === 'DROPBOX' || questionType === 'MULTICHOICE' || questionType === 'IMAGE') {
+            questionHtml += '<select id="question" name="questionType"><option value="CHECKBOX">CHECKBOX</option><option value="DROPBOX">DROPBOX</option><option value="MULTICHOICE">MULTICHOICE</option><option value="IMAGE">IMAGE</option></select>';
+        } else {
+            alert('Недопустимый тип вопроса');
+            return;
+        }
+
+        questionHtml += '<button onclick="addAnswer()">Добавить ответ</button>';
+        questionOptions += '<div id="answers"></div>';
+
+        var newQuestion = document.createElement('div');
+        newQuestion.innerHTML = questionHtml + questionOptions;
+        document.getElementById('questions').appendChild(newQuestion);
+    }
+
+    function addAnswer() {
+        var answerHtml = '<label for="answer">Ответ:</label><br>';
+        answerHtml += '<input type="text" id="answer" name="answer"><br>';
+        document.getElementById('answers').innerHTML += answerHtml;
+    }
+</script>
+
+
+
+<!--<script>
+    $(document).ready(function () {
+        var questionCount = 0;
+
+        $('.add-question').click(function (e) {
+            e.preventDefault();
+            questionCount++;
+            var newQuestion = '<div class="question-container">' +
+                '<label for="question' + questionCount + '">Вопрос ' + questionCount + ':</label>' +
+                '<input type="text" id="question' + questionCount + '" name="question' + questionCount + '" required class="form-control">' +
+                '<label for="answer' + questionCount + '-1">Ответ 1:</label>' +
+                '<input type="text" id="answer' + questionCount + '-2" name="answer' + questionCount + '-2" required class="form-control">' +
+                '<button class="add-answer">Добавить ответ</button>' +
+                '</div>';
+            $(newQuestion).insertBefore('.add-question');
+        });
+        $(document).on('click', '.add-answer', function (e) {
+            e.preventDefault();
+            var answerCount = $(this).siblings('label').length - 1;
+            var questionNumber = $(this).siblings('label').first().attr('for').replace('question', '');
+            answerCount++;
+            var newAnswer = '<label for="answer' + questionNumber + '-' + answerCount + '">Ответ ' + answerCount + ':</label>' +
+                '<input type="text" id="answer' + questionNumber + '-' + answerCount + '" name="answer' + questionNumber + '-' + answerCount + '" required class="form-control">';
+            $(this).before(newAnswer);
+        });
+    });
+</script>-->
+
+</body>
+</html>

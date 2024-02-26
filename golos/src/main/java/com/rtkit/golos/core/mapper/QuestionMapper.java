@@ -14,11 +14,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
 
+    @Mapping(target = "text", source = "content")
     QuestionDto toQuestionDto(Question question);
 
     List<QuestionDto> toQuestionDtos(List<Question> questions);
 
     @Mapping(target = "pollId", expression = "java(pollQuestion.getPollId().getId())")
+    @Mapping(target = "question", source = "questionId")
     PollQuestionDto toPollQuestionDto(PollQuestion pollQuestion);
 
     List<PollQuestionDto> toPollQuestionDtos(List<PollQuestion> pollQuestions);

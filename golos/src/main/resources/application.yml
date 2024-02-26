@@ -14,13 +14,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres.backend:6432/golosbd
-    username: test
-    password: test
+    url: jdbc:postgresql://localhost:5432/rtkit_golos
+    username: postgres
+    password: Ronaldo2003
   rabbitmq:
     host: rabbitmq
     port: 5672

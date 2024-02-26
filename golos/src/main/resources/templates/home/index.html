@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Опросник</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css"></style>
+
+    <style>
+        .logo {
+            height: 70px;
+            margin-bottom: 5px;
+        }
+
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .jumbotron {
+            background-color: #ffffff;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .jumbotron h1 {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .jumbotron .btn {
+            display: block;
+            width: 50%;
+            margin-left: 350px;
+            margin-bottom: 20px;
+            margin-top: 100px;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">
+        <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}"> Главная <span class="sr-only"></span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/polls}">Опросы</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/lk}">Личный кабинет</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}">Выход</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+<div class="jumbotron">
+    <h1>Добро пожаловать!</h1>
+
+    <a th:href="@{/polls}" class="btn btn-primary btn-lg">Перейти к опросам</a>
+</div>
+
+</body>
+</html>

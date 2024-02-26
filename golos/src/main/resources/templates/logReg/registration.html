@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .login-form {
+            width: 340px;
+            margin: 50px auto;
+            font-size: 15px;
+            padding: 30px;
+            border-radius: 35px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .form-control, .btn {
+            min-height: 38px;
+            border-radius: 2px;
+        }
+
+        .login-form img {
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            font-size: 15px;
+            font-weight: bold;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="login-form">
+    <img th:src="@{/images/logo.png}" alt="logo" width="200" height="65">
+
+    <form th:action="@{/registration}" th:object="${user}" method="post">
+
+        <div th:if="${param.error}">
+            <div class="alert alert-danger"> Пользователь с таким email уже зарегистрирован. </div>
+        </div>
+
+        <div th:if="${param.success}">
+            <div class="alert alert-info"> Вы были успешно зарегистрированы!</div>
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">
+                <input type="text" th:field="*{firstName}" class="form-control" placeholder="Имя" id="firstName"
+                       required="required">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">
+                <input type="text" th:field="*{lastName}" class="form-control" placeholder="Фамилия" id="lastName"
+                       required="required">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="email">
+                <input type="email" th:field="*{email}" class="form-control" placeholder="Email" id="email"
+                       required="required">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="password">
+                <input type="password" th:field="*{passHash}" class="form-control" placeholder="Пароль"
+                       id="password" required="required">
+            </label>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+        <br>
+        <span>Уже зарегистрированы? <a href="/static" th:href="@{/login}">
+                Войти </a></span>
+
+    </form>
+</div>
+
+
+</body>
+</html>
