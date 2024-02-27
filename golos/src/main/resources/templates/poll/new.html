@@ -20,6 +20,11 @@
         .navbar {
             background-color: #0f1727;
         }
+
+        .btn {
+            background-color: #7700ff !important;
+            border-color: #7700ff;
+        }
     </style>
 
 </head>
@@ -67,17 +72,6 @@
             <label for="description">Описание:</label>
             <textarea id="description" name="description" th:field="*{description}" required
                       class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="status">Статус:</label>
-            <select id="status" name="status" th:field="*{status}" class="form-control" required>
-                <option value="PUBLIC">PUBLIC</option>
-                <option value="PRIVATE">PRIVATE</option>
-                <option value="HIDDEN">HIDDEN</option>
-                <option value="CLOSED">CLOSED</option>
-                <option value="DRAFT">DRAFT</option>
-            </select>
         </div>
 
         <button type="submit" class="btn btn-success mt-3">Создать опрос</button>

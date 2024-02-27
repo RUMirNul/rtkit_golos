@@ -56,9 +56,9 @@ public class PollsPageController {
         GolosUser user = userService.getGolosUserByEmail(email);
 
         newPoll.setAuthorId(user.getId());
-        PollDto pollDto = pollService.addPoll(newPoll);
+        pollService.addPoll(newPoll);
 
-        return "redirect:/polls/" + pollDto.getId() + "/edit";
+        return "redirect:/polls";
     }
 
     @GetMapping("/{pollid}/end")
@@ -71,21 +71,31 @@ public class PollsPageController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editPage(@PathVariable("id") int id) {
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("poll", pollService.getPollById(id));
+
         return "/poll/edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("poll") UpdatePollRequest newPoll) {
+    @PutMapping("/{id}")
+    public String update(@ModelAttribute("poll") UpdatePollRequest poll) {
 
-        pollService.updatePollDto(newPoll);
-        return "redirect:/people";
+        pollService.updatePollDto(poll);
+
+        return "redirect:/lk";
+    }
+
+    @PatchMapping("/{id}/publish")
+    public String publish(@PathVariable("id") int id) {
+        pollService.updatePollStatus(id, "PUBLIC");
+
+        return "redirect:/lk";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         pollService.deletePoll(id);
 
-        return "redirect:/polls";
+        return "redirect:/lk";
     }
 }

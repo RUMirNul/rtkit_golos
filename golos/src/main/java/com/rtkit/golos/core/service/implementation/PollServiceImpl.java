@@ -89,8 +89,12 @@ public class PollServiceImpl implements PollService {
 
     @Override
     public PollDto updatePollDto(UpdatePollRequest pollUpdateDto) {
-        PollDto requestDto = pollMapper.toDto(pollUpdateDto);
-        Poll newPoll = pollMapper.toEntity(requestDto);
+        PollDto pollDto = getPollById(pollUpdateDto.getId());
+        pollDto.setName(pollUpdateDto.getName());
+        pollDto.setDescription(pollUpdateDto.getDescription());
+        pollDto.setStatus(pollUpdateDto.getStatus());
+
+        Poll newPoll = pollMapper.toEntity(pollDto);
         log.info("Сопоставленный объект Poll: {}", newPoll);
 
         Poll updatedPoll = pollRepo.saveAndFlush(newPoll);

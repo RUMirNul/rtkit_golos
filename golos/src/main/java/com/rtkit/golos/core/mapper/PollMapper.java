@@ -11,7 +11,6 @@ import java.util.List;
 
 @Mapper(componentModel="spring", uses = {UserMapperUtil.class})
 public interface PollMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "authorId", source = "authorId")
     Poll toEntity(PollDto dto);
 

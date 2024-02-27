@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Страница запуска опроса</title>
+    <title>Изменить опрос</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,36 +17,22 @@
             margin-bottom: 5px;
         }
 
-        body {
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
         .navbar {
             background-color: #0f1727;
         }
 
-        .btn-primary {
-            background-color: #7700ff !important;
-            border-color: #7700ff;
+        .form-control {
+            margin-bottom: 25px;
         }
 
-        .btn-secondary {
-            background-color: #7700ff !important;
-            border-color: #7700ff;
+        .btn {
+            text-align: right;
         }
     </style>
 
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" th:href="@{/}">
         <img th:src="@{/images/logoSmall.png}" alt="Logo" class="logo">
@@ -73,28 +59,35 @@
             </li>
         </ul>
     </div>
+
 </nav>
 
+<div class="container jumbotron">
+    <form method="POST" th:action="@{/polls/{id}(id=${poll.getId()})}" th:object="${poll}">
 
-<div class="container">
-    <div class="jumbotron">
-        <h1 th:text="${poll.getName()}"> name </h1>
-        <p>Описание опроса: <span th:text="${poll.getDescription()}"> description </span></p>
+        <input type="hidden" name="_method" value="put">
+        <label for="name" > Название: </label>
+        <input th:field="*{name}" id="name" class="form-control">
+
+        <label for="description"> Описание: </label>
+        <textarea th:field="*{description}" class="form-control" id="description"> </textarea>
+
         <p>Дата добавления: <span th:text="${poll.getCreatedDt()}"> date </span></p>
 
-        <a th:if="${#lists.isEmpty(pollquestion)}">
-            <h6> Опрос ещё пустой </h6>
-        </a>
+        <label for="status"> </label>
+        <select id="status" name="status" th:field="*{status}" class="form-control" required>
+            <option value="PUBLIC">PUBLIC</option>
+            <option value="PRIVATE">PRIVATE</option>
+            <option value="HIDDEN">HIDDEN</option>
+            <option value="CLOSED">CLOSED</option>
+            <option value="DRAFT">DRAFT</option>
+        </select>
 
-        <a th:if="${!#lists.isEmpty(pollquestion)}"
-           th:href="@{/polls/{pollid}/questions/1(pollid=${id})}"
-           class="btn btn-primary">Начать опрос
-        </a>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-primary">Обновить опрос</button>
+        </div>
+    </form>
 
-    </div>
-
-    <a th:href="@{/polls}"
-       class="btn btn-secondary back-btn">← Вернуться к списку опросов</a>
 </div>
 </body>
 </html>

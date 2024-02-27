@@ -57,6 +57,11 @@
         .navbar {
             background-color: #0f1727;
         }
+
+        .btnCreate {
+            background-color: #7700ff !important;
+            border-color: #7700ff;
+        }
     </style>
 
 </head>
@@ -126,7 +131,7 @@
 
                     <tr th:if="${#lists.isEmpty(userPolls)}">
                         <td colspan="3">У вас пока нет ни одного опроса.</td>
-                        <td><a th:href="@{/polls/create}" class="btn btn-success float-right mr-5"> Создать опрос </a>
+                        <td><a th:href="@{/polls/create}" class="btn btn-success float-right mr-5 btnCreate"> Создать опрос </a>
                         </td>
                     </tr>
 
@@ -141,16 +146,17 @@
                         </td>
 
                         <td>
-                            <form th:action="@{/polls/{id}/publish(id=${poll.getId()})}" method="post">
-                                <button th:href="@{/polls/{id}/publish(id=${poll.getId()})}" type="submit"
-                                        class="btn btn-outline-secondary">Опубликовать опрос
-                                </button>
+                            <form>
+                                <a th:href="@{/polls/{id}/edit(id=${poll.getId()})}"
+                                   class="btn btn-outline-secondary">
+                                    Изменить опрос
+                                </a>
                             </form>
                         </td>
 
                         <td>
-                            <form th:action="@{/polls/{id}(id=${poll.getId()})}" method="post">
-
+                            <form method="post" th:action="@{/polls/{id}(id=${poll.getId()})}">
+                                <input type="hidden" name="_method" value="delete">
                                 <button type="submit" class="btn btn-outline-danger">Удалить опрос</button>
                             </form>
                         </td>
