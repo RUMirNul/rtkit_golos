@@ -79,7 +79,7 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/lk}">Личный кабинет</a>
             </li>
 
@@ -141,13 +141,16 @@
                         </td>
 
                         <td>
-                            <a th:href="@{/polls/{id}/edit(id=${poll.getId()})}" class="btn btn-outline-secondary">Изменить
-                                опрос</a>
+                            <form th:action="@{/polls/{id}/publish(id=${poll.getId()})}" method="post">
+                                <button th:href="@{/polls/{id}/publish(id=${poll.getId()})}" type="submit"
+                                        class="btn btn-outline-secondary">Опубликовать опрос
+                                </button>
+                            </form>
                         </td>
 
                         <td>
-                            <form th:action="@{/polls/{id}(id=${poll.getId()})}" th:method="DELETE">
-                                <input type="hidden" name="_method" value="DELETE" />
+                            <form th:action="@{/polls/{id}(id=${poll.getId()})}" method="post">
+
                                 <button type="submit" class="btn btn-outline-danger">Удалить опрос</button>
                             </form>
                         </td>
