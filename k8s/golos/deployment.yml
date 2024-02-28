@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: golos-v1
-        image: cr.yandex/crpsdee4cj9f5r7k87ic/golos:v1
+        image: cr.yandex/crpsdee4cj9f5r7k87ic/golos:v1.1.1
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: prod
