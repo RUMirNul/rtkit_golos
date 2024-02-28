@@ -107,10 +107,14 @@
 
             <div th:if="${pollQuestionDto.getQuestion().getType()
                         == T(com.rtkit.golos.core.entity.QuestionType).CHECKBOX}"
-                 class="container" th:each="checkAnswer, iterStat : ${questionAnswers}">
+                 class="container">
 
-                <input type="checkbox" th:id="'checkAnswer' + ${iterStat}">
-                <label th:for="'checkAnswer' + ${iterStat}" th:text="${checkAnswer.getContent()}"></label>
+                <label th:each="checkAnswer : ${questionAnswers}" th:style="'display: block;'" class="checkbox-answer">
+                    <input type="checkbox"
+                           th:attr="name=${pollQuestionDto.getQuestion().getId()}, value=${checkAnswer.getId()}"
+                           th:id="'radioAnswer' + ${checkAnswer.getId()}" th:text="${checkAnswer.getContent()}">
+                    <br><br>
+                </label>
             </div>
 
 
@@ -138,14 +142,87 @@
 
             </div>
 
-
-            <a th:href="${pollQuestionDtos.get(0) == pollQuestionDto}  ? '/polls/' + ${pollid} :
-                        '/polls/' + ${pollid} + '/questions/' + ${questionIndex - 1}" class="btn btn-primary mt-3"> Назад </a>
+            <!--<a th:href="${pollQuestionDtos.get(0) == pollQuestionDto}  ? '/polls/' + ${pollid} :
+                        '/polls/' + ${pollid} + '/questions/' + ${questionIndex - 1}" class="btn btn-primary mt-3">
+                Назад </a>
             <a th:href="${pollQuestionDtos.get(pollQuestionDtos.size() - 1) == pollQuestionDto} ? '/polls/' + ${pollid} + '/end' :
-                        '/polls/' + ${pollid} + '/questions/' + ${questionIndex + 1}" class="btn btn-primary mt-3"> Далее </a>
+                        '/polls/' + ${pollid} + '/questions/' + ${questionIndex + 1}" class="btn btn-primary mt-3">
+                Далее </a>-->
+
+            <input type="hidden" id="pollId" th:value="${pollid}">
+            <input type="hidden" id="selectedAnswer" name="selectedAnswer">
+
+            <button id="prevButton" class="btn btn-primary mt-3">Назад</button>
+            <button id="nextButton" class="btn btn-primary mt-3">Далее</button>
         </div>
     </div>
 </div>
 
+<script th:inline="javascript">
+
+    document.getElementById("nextButton").addEventListener("click",
+        function () {
+            var pollId = document.getElementById("pollId").value;
+
+            var nextQuestionId = document.getElementById("selectedAnswer").value;
+
+            console.log(nextQuestionId)
+            if (nextQuestionId == 0) {
+                console.log(nextQuestionId)
+                window.location.href = "/polls/" + pollId + "/end";
+            } else if (nextQuestionId == -1) {
+                console.log(nextQuestionId)
+                window.location.href = "/polls/" + pollId + "/end";
+            } else {
+                console.log(nextQuestionId);
+                window.location.href = "/polls/" + pollId + "/questions/" + nextQuestionId;
+            }
+        }
+    );
+
+    document.getElementById("prevButton").addEventListener("click",
+        function () {
+            history.back();
+        }
+    );
+
+    $(document).ready(function () {
+        var nextQuestionLink = -1;
+        var questionAnswers = /*[[${questionAnswers}]]*/ [] ;
+        if (questionAnswers.length > 0) {
+            nextQuestionLink = questionAnswers[0].nextQuestionId;
+        }
+
+        $('.radio-answer input[type="radio"], .checkbox-answer input[type="checkbox"]').change(function () {
+
+            var selectedValue = $(this).val();
+            var selectedAnswerId = selectedValue;
+
+            if ($(this).is(':checkbox')) {
+                $('.checkbox-answer input[type="checkbox"]:checked').each(function() {
+                    selectedAnswerId = $(this).val();
+                });
+            }
+            if ($('.checkbox-answer input[type="checkbox"]:checked').length <= 0) {
+                selectedAnswerId = -1;
+            }
+
+            for (var i = 0; i < questionAnswers.length; i++) {
+                if (questionAnswers[i].id == selectedAnswerId) {
+                    nextQuestionLink = questionAnswers[i].nextQuestionId;
+                    break;
+                }
+            }
+
+            console.log('Следующий вопрос id: ' + nextQuestionLink);
+            console.log(nextQuestionLink);
+
+            $('#selectedAnswer').val(nextQuestionLink);
+            var nextQuestionId = document.getElementById("selectedAnswer").value;
+            console.log(nextQuestionId)
+        });
+    });
+
+</script>
 </body>
 </html>
