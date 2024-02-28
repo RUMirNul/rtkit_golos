@@ -66,7 +66,7 @@
     <form method="POST" th:action="@{/polls/{id}(id=${poll.getId()})}" th:object="${poll}">
 
         <input type="hidden" name="_method" value="put">
-        <label for="name" > Название: </label>
+        <label for="name"> Название: </label>
         <input th:field="*{name}" id="name" class="form-control">
 
         <label for="description"> Описание: </label>
@@ -82,6 +82,8 @@
             <option value="CLOSED">CLOSED</option>
             <option value="DRAFT">DRAFT</option>
         </select>
+
+        <a th:href="@{/polls/{pollid}/questions/create(pollid=${poll.getId()})}" class="btn btn-outline-secondary">Добавить вопрос</a>
 
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-outline-primary">Обновить опрос</button>
