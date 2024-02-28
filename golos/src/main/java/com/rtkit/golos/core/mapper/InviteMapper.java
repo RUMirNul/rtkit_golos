@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel="spring", uses = {PollMapperUtil.class})
 public interface InviteMapper {
+    @Mapping(target = "pollId", ignore = true)
     @Mapping(target = "uses", ignore = true)
     @Mapping(target = "expireDt", ignore = true)
     @Mapping(target = "createdDt", ignore = true)

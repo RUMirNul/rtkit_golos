@@ -29,6 +29,7 @@ dependencies {
     implementation project(path: ':common')
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.20'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 	implementation 'com.fasterxml.jackson.core:jackson-annotations'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'

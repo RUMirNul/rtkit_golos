@@ -39,6 +39,7 @@ public class UserDto {
     private UserRole role;
 
     public UserDto(GolosUser user) {
+        this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();

@@ -25,8 +25,8 @@ public class EmailServiceImpl implements EmailService {
     @RabbitListener(queues = "invite")
     public void onInviteMessage(final PollInviteDto inviteDto) {
         log.info("Запрос приглашения: {} ", inviteDto);
-        final String subject = "Vote in poll: " + inviteDto.getPollName();
-        final String content = "Poll link:" + inviteDto.getUrl();
+        final String subject = "Проголосуйте в опросе: " + inviteDto.getPollName();
+        final String content = "Ссылка на опрос:" + inviteDto.getUrl();
         setEmail(createEmail(inviteDto.getEmail(), subject, content, null));
     }
 
@@ -34,16 +34,16 @@ public class EmailServiceImpl implements EmailService {
     @RabbitListener(queues = "activation")
     public void onActivationMessage(final UserRegisterDto userDto) {
         log.info("Запрос активации: {} ", userDto);
-        String subject = "Here's your activation code:" + userDto.getActivationCode();
-        String content = "Ignore";
+        String subject = "Регистрация на сервисе Golos" + userDto.getActivationCode();
+        String content = "Игнорируйте, если вы не регистрировались.";
         setEmail(createEmail(userDto.getEmail(), subject, content, null));
     }
 
     @RabbitListener(queues = "statMail")
     public void onStatMessage(final FileDto fileDto) {
-        log.info("Запрос отправки статистики на электронную почту: {} ", fileDto.getEmail());
-        final String subject = "Статистика по опросу: " + 1;
-        final String content = "Poll link:";
+        log.info("Запрос отправки статистики на электронную почту:" + fileDto.getEmail());
+        final String subject = "Статистика по опросу.";
+        final String content = "Данные о результатах опроса.";
         DataSource fds = new ByteArrayDataSource(fileDto.getExcelFile(), "application/vnd.ms-excel");
         setEmail(createEmail(fileDto.getEmail(), subject, content, fds));
     }

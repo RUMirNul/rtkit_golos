@@ -1,8 +1,6 @@
 spring:
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE} #spring.profiles.active#
   rabbitmq:
-    host: ${SPRING_RABBITMQ_HOST}
+    host: localhost
     port: 5672
     username: admin
     password: admin

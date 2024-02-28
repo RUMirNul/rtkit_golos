@@ -4,10 +4,7 @@ import com.rtkit.golos.core.web.request.AddUserPollResultRequest;
 import com.rtkit.golos.core.dto.UserPollResultDto;
 import com.rtkit.golos.core.entity.UserPollResult;
 import com.rtkit.golos.core.entity.UserPollStatus;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ValueMapping;
-import org.mapstruct.ValueMappings;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -25,7 +22,8 @@ public interface UserPollResultMapper {
     @ValueMappings({
             @ValueMapping(source="ONGOING", target="ONGOING"),
             @ValueMapping(source="DROPPED", target="DROPPED"),
-            @ValueMapping(source="COMPLETED", target="COMPLETED")
+            @ValueMapping(source="COMPLETED", target="COMPLETED"),
+            @ValueMapping(source= MappingConstants.ANY_REMAINING, target="ONGOING")
     })
     UserPollStatus toUserPollResult(String statusName);
 

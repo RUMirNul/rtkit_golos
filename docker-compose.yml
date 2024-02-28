@@ -79,7 +79,6 @@ services:
         condition: service_healthy
     environment:
       SPRING_RABBITMQ_HOST: 158.160.150.41
-#      SPRING_PROFILES_ACTIVE: prod
     networks:
       backend: { aliases: [ notifier.backend ] }
 

@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  thymeleaf:
+    prefix: classpath:/templates/
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml

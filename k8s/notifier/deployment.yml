@@ -18,6 +18,6 @@ spec:
       containers:
         - env:
             - name: SPRING_RABBITMQ_HOST
-              value: 158.160.150.41
+              value: rabbitmq-3management
           name: golos-notify-v1
-          image: cr.yandex/crpsdee4cj9f5r7k87ic/golos-notify:v1
+          image: cr.yandex/crpsdee4cj9f5r7k87ic/golos-notify:v1.0.1

@@ -13,7 +13,8 @@ public interface UserMapper {
     @ValueMappings({
             @ValueMapping(source="ADMIN", target="ADMIN"),
             @ValueMapping(source="MODERATOR", target="MODERATOR"),
-            @ValueMapping(source="USER", target="USER")
+            @ValueMapping(source="USER", target="USER"),
+            @ValueMapping(source=MappingConstants.ANY_REMAINING, target="USER"),
     })
     UserRole toUserRole(String roleType);
 

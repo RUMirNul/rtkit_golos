@@ -22,6 +22,7 @@ public class StatisticsService {
     private final ImageAnswerRepository imageAnswerRepository;
     private final TextAnswerRepository textAnswerRepository;
     private final AnswerRepository answerRepository;
+    private final UserTextAnswerRepository userTextAnswerRepository;
 
     public List<StatResultPoll> formStatistics(int pollId) {
         List<PollQuestion> pollQuestions = pollQuestionRepository.findAllByPollIdId(pollId);
@@ -42,7 +43,7 @@ public class StatisticsService {
     public String getAnswerContent(int answerId) {
         Answer answer = answerRepository.findById(answerId).orElseThrow();
         return switch (answer.getType()) {
-            case USERTEXT -> userAnswerRepository.findById(answer.getId()).get().getUserAnswer();
+            case USERTEXT -> userTextAnswerRepository.findById(answer.getId()).get().getPreparedText();
             case TEXT -> textAnswerRepository.findById(answer.getId()).get().getContent();
             case IMAGE -> imageAnswerRepository.findById(answer.getId()).get().getImagePath();
         };

@@ -10,5 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatResultPollList {
+    private String email;
     List<StatResultPoll> pollAnswerDtoList;
 }

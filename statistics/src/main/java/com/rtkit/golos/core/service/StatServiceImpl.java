@@ -2,6 +2,7 @@ package com.rtkit.golos.core.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.FileDto;
 import org.example.StatResultPoll;
 import org.example.StatResultPollList;
 import org.jxls.common.JxlsException;
@@ -24,10 +25,10 @@ public class StatServiceImpl implements StatService {
 
     @Override
     @RabbitListener(queues = "stat")
-    public byte[] onStatMessage(final StatResultPollList resultList) {
+    public FileDto onStatMessage(final StatResultPollList resultList) {
         log.info("Запрос статистики: {} ", resultList);
         try {
-            return exportPollStat(resultList.getPollAnswerDtoList());
+            return new FileDto(resultList.getEmail(), exportPollStat(resultList.getPollAnswerDtoList()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

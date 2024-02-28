@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/question/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/answer/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/polls/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/poll/participation/**")).permitAll()
                         .requestMatchers("/registration**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .anyRequest().authenticated()

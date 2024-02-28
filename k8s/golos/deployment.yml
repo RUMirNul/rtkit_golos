@@ -30,4 +30,4 @@ spec:
           - name: PASSWORD
             value: "golosgolos"
           - name: SPRING_RABBITMQ_HOST
-            value: 158.160.150.41
+            value: rabbitmq-3management

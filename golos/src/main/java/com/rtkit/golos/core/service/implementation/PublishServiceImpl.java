@@ -37,10 +37,10 @@ public class PublishServiceImpl implements PublishService {
     @Override
     public void publishStatMessage(String email, List<StatResultPoll> statDto) {
         log.info("Добавление в очередь сообщения со статистикой: {}", statDto);
-        byte[] resultFileByteArray = (byte[]) rabbitTemplate.convertSendAndReceive("golos", "stat", new StatResultPollList(statDto));
-        if (resultFileByteArray != null) {
+        FileDto resultFile = (FileDto) rabbitTemplate.convertSendAndReceive("golos", "stat", new StatResultPollList(email, statDto));
+        if (resultFile != null) {
             log.info("Добавление в очередь сообщения об отправке статистики на почту: {}", email);
-            rabbitTemplate.convertAndSend("golos", "statMail", new FileDto(email, resultFileByteArray));
+            rabbitTemplate.convertAndSend("golos", "statMail", resultFile);
         } else
             log.info("Произошла ошибка при формировании статистики.");
 

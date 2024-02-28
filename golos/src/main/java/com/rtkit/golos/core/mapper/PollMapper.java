@@ -17,6 +17,7 @@ public interface PollMapper {
     @Mapping(target = "authorId", source = "authorId")
     PollDto toDto(Poll createdPoll);
 
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDt", ignore = true)
     PollDto toDto(AddPollRequest dto);
@@ -32,6 +33,7 @@ public interface PollMapper {
             @ValueMapping(source="CLOSED", target="CLOSED"),
             @ValueMapping(source="DRAFT", target="DRAFT"),
             @ValueMapping(source=MappingConstants.NULL, target="DRAFT"),
+            @ValueMapping(source=MappingConstants.ANY_REMAINING, target="DRAFT"),
     })
     PollStatus toPollStatus(String dateType);
 
