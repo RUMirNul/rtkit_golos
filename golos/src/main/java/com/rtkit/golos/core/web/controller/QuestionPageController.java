@@ -28,12 +28,19 @@ public class QuestionPageController {
     public String show(Model model,
                        @PathVariable("pollid") int pollId,
                        @PathVariable("questid") int questId) {
+
         model.addAttribute("pollid", pollId);
 
         List<PollQuestionDto> pollQuestionDtos = questionService.getAllQuestionsByPollId(pollId);
         model.addAttribute("pollQuestionDtos", pollQuestionDtos);
 
-        PollQuestionDto pollQuestionDto = pollQuestionDtos.get(questId - 1);
+        PollQuestionDto pollQuestionDto = pollQuestionDtos.get(0);
+        for (PollQuestionDto pollQuestionDto1 : pollQuestionDtos) {
+            if (pollQuestionDto1.getId() == questId) {
+                pollQuestionDto = pollQuestionDto1;
+                break;
+            }
+        }
         model.addAttribute("pollQuestionDto", pollQuestionDto);
 
         model.addAttribute("questionIndex", pollQuestionDtos.indexOf(pollQuestionDto) + 1);
